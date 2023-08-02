@@ -29,7 +29,7 @@ background: #005DFF;">About Me!</h1>
     </button>
     
     <p class="data" hidden id="job">
-      I am taking the Web Mapping class. 
+      I am taking the Web Mapping class. This is my first class in the Geography Department.
     </p>
 
     <script>
@@ -42,9 +42,12 @@ background: #005DFF;">About Me!</h1>
 
       $("button#job").click(
           function() {
-            $("p#job").toggle();
+            $("p#job").fadeToggle();
           }
       ); 
+      $("h3").hover(
+        function() {
+          console.log (h3.hover;);})
     </script>
     
     <p class="data">I am from <strong>Irvine, CA</strong> but I go to school in <strong>New Hampshire</strong>.</p>

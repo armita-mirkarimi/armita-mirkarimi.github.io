@@ -57,6 +57,30 @@ background: #005DFF;">About Me!</h1>
     
     <p style="font-family: courier;">I am a <del>Government</del> and <sup>English</sup> major but it has been <strong>awesome</strong> to learn more about maps.</p>
 
+    <button id="study">
+        Find out why Government is crossed out.
+    </button>
+
+      <p class="data" hidden id="study">
+      I should have been an anthro major but now I in too deep with gov!
+    </p>
+
+       <script>
+     // $("p") <-- This will reference all the <p> tags
+      // $ ("#study") <-- This will reference all "#study" ids
+      // $(".data") <--- This will reference all the ".data" classes
+
+    // use jquery to listen for a button click 
+    // toggle the hidden job message
+
+      $("button#study").click(
+          function() {
+            $("p#job").toggle();
+          }
+      ); 
+      
+    </script>
+
     <!-- This is my coffee intake. a little bit scary.... -->   
   
    <table>

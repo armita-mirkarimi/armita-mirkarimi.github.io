@@ -25,7 +25,7 @@ background: #005DFF;">About Me!</h1>
      </div>
 
     <button id="job">
-        Click here to learn more!
+        Why am I here?
     </button>
     
     <p class="data" hidden id="job">
@@ -55,11 +55,11 @@ background: #005DFF;">About Me!</h1>
     <p style="font-family: courier;">I am a <del>Government</del> and <sup>English</sup> major but it has been <strong>awesome</strong> to learn more about maps.</p>
 
     <button id="study">
-        Find out why Government is crossed out.
+        Find out why Government is crossed out...
     </button>
 
       <p class="data" hidden id="study">
-      I should have been an anthro major but now I in too deep with gov!
+      I should have been an anthro major but now I am in too deep with gov!
     </p>
 
        <script>
@@ -72,7 +72,7 @@ background: #005DFF;">About Me!</h1>
 
       $("button#study").click(
           function() {
-            $("p#study").toggle();
+            $("p#study").fadeToggle();
           }
       ); 
       

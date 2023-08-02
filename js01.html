@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+  
+  <title>This is Armita's very first web page!</title>
+  <link rel="stylesheet" href="style05.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+</head>  
+<!-- This is my js 01 webpage. yayyyy!!!! -->   
+  <body>
+    
+    <h1 style="color: #FFFFFF;
+background: #005DFF;
+text-shadow: -5px 5px 0px #00e6e6, -10px 10px 0px #01cccc, -15px 15px 0px #00bdbd;
+color: #FFFFFF;
+background: #005DFF;">About Me!</h1>
+    
+     
+     <div id="me">
+      <img id="me-img" src="me.jpeg">
+      <br>
+     <stong>This is me!</strong>
+
+     </div>
+
+    <button id="job">
+        Click here to learn more!
+    </button>
+    
+    <p class="data" hidden id="job">
+      I am taking the Web Mapping class. 
+    </p>
+
+    <script>
+     // $("p") <-- This will reference all the <p> tags
+      // $ ("#job") <-- This will reference all "#job" ids
+      // $(".data") <--- This will reference all the ".data" classes
+
+    // use jquery to listen for a botton click 
+    // toggle the hidden job message
+
+      $("button#job").click(
+          function() {
+            $("p#job").toggle();
+          }
+      ); 
+    </script>
+    
+    <p class="data">I am from <strong>Irvine, CA</strong> but I go to school in <strong>New Hampshire</strong>.</p>
+      <a href="https://open.spotify.com/playlist/4KqrMr0lkU7OxzgQwrf1gK?si=1736238facf74e64"><img src="irvine.jpeg" style="width: 30%; height: 200px;"></a>
+    
+    <h3 style="font-family: courier; background-color: #FFBF00">What I study:</h3>
+    
+    <p style="font-family: courier;">I am a <del>Government</del> and <sup>English</sup> major but it has been <strong>awesome</strong> to learn more about maps.</p>
+
+    <!-- This is my coffee intake. a little bit scary.... -->   
+  
+   <table>
+    <tr>
+        <th style="color: #333333;
+        background: #FFFFFF;
+        text-shadow: 2px 2px 0px #FFFFFF, 5px 4px 0px rgba(0,0,0,0.15);
+       color: #333333;
+       background: #FFFFFF; "colspan="3">Armita's Coffee Intake</th>
+  
+    </tr>
+    <tr>
+        <th style="font-size: 6x;">Week number of term</th>
+        <th style="font-size: 6x;">Cups of Coffee consumed</th>
+        <th style="font-size: 6x;">Average hours of sleep</th>
+    </tr>
+    <tr>
+        <td>5</td>
+        <td>21</td>
+        <td>6</td>
+    </tr>
+    
+    <tr>
+      <td>4</td>
+      <td>28</td>
+      <td>5</td>
+    </tr>
+
+    <tr>
+      <td>3</td>
+      <td>14</td>
+      <td>8</td>
+    </tr>
+
+    <tr>
+      <td>2</td>
+      <td>7</td>
+      <td>8</td>
+    </tr>
+
+    <tr>
+      <td>1</td>
+      <td>2</td>
+      <td>8</td>
+    </tr>
+
+     </table>
+
+  <<h3 style="font-family: courier; color: #005900;
+background: #FFFCA8;
+text-shadow: #FFFCA8 2px 2px 0px, #9C9C9C 4px 4px 0px;
+color: #005900; background-color: #F19CBB">Places I want to travel</h3>
+    <ul style="font-family: georgia;">
+      <li>Stokholm, Sweden</li>
+      <li>Cairo, Egypt</li>
+      <li>Zurich, Switzerland</li>
+      <li>Hastings, United Kingdom</li>
+      <li>Jakarta, Indonesia</li>
+    </ul>
+
+     <h3 style="font-family: courier; color: #005900;
+background: #FFFCA8;
+text-shadow: #FFFCA8 2px 2px 0px, #9C9C9C 4px 4px 0px;
+color: #005900; background-color: #F0F8FF">My upcoming travels</h3>
+    <ol style="font-family: georgia;">
+      <li>London, United Kingdom</li>
+      <li>Madrid, Spain</li>
+      <li>Florence, Italy</li>
+      <li>Dublin, Ireland</li>
+      <li>Geneva, Switzerland</li>
+    </ol>
+
+   <p>&nbsp;</p>
+
+ <h3 style="font-family: courier; color: #005900;
+background: #FFFCA8;
+text-shadow: #FFFCA8 2px 2px 0px, #9C9C9C 4px 4px 0px;
+color: #005900; background-color: #E6EAFF">Some links I want to share</h3>
+    <ol style="font-family: georgia;">
+      
+<a href="https://www.thedartmouth.com/article/2023/02/noon-panir-in-the-dark-sheds-light-on-humanity-behind-womens-rights-movement-in-iran">This is an article about the play I wrote! Sophie Chadha is so gracious in her coverage.</a>
+   
+  <p>&nbsp;</p>
+   
+   <a href="https://www.poetseers.org/contemporary-poets/mary-oliver/mary-oliver-poems/wild-geese/">This is one of my favorite poems, Wild Geese by Mary Oliver. Give it a read!</a>
+
+    
+  </body>
+  
+</html>

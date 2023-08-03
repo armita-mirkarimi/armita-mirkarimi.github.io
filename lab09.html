@@ -23,7 +23,7 @@
               console.log("clicked on" + id);
               
               if (guesses.includes(id)) {
-                  $("#error_msg").html("Gosh darn it, you already guessed this letter" + id)
+                  $("#error_msg").html("Gosh darn it, you already guessed this letter " + id)
               } else {
                         guesses = guesses + id;
                         $("#" + id).css('text-decoration', 'line-through');

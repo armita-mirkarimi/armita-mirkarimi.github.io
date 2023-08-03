@@ -3,17 +3,23 @@
 <head> 
   <title>Hangman</title> <!--The title of our webpage -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  
   <script>
     $(document).ready(
       function() {
+
+        
         var total_guesses = 10; 
         var word = "d a u n t l e s s;"
         var blanks = "_ _ _ _ _ _ _ _ _ ";
         var guesses = "";
+
+        
         $(".letter").click(
             function() {
               var id = $(this).attr('id');
               console.log("clicked on" + id);
+              
               if (guesses.includes(id)) {
                   $("#error_msg").html("Gosh darn it, you already guessed this letter" + id);
                     } else {
@@ -24,6 +30,7 @@
   </script>
 
 </head>
+  
 <body>
   <h1>Hangman</h1>
   <div id="chances">
@@ -70,8 +77,9 @@
 
 </div>
 
-<div id="erro_rmsg" style="color: red;"></div>
+<div id="error_msg" style="color: red;"></div>
 
 
 </body>
+  
 </html>

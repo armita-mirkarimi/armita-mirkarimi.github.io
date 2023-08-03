@@ -17,8 +17,6 @@
         var guesses = "";
 
         $("#word").html(blanks);
-
-        
         $(".letter").click(
             function() {
               var id = $(this).attr('id');
@@ -31,7 +29,7 @@
                         $("#" + id).css('text-decoration', 'line-through');
                         total_guesses = total_guesses - 1;
 
-                        if (total_guesses = 0) {
+                        if (total_guesses < 0) {
                           $("#error_msg").html("Darn. You are out of guesses. Sad!")
                     } else { 
                           $("#numleft").html(total_guesses);

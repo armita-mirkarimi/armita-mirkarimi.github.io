@@ -24,14 +24,14 @@
               
               if (guesses.includes(id)) {
                   $("#error_msg").html("Gosh darn it, you already guessed this letter" + id)
-                    } else {
+              } else {
                         guesses = guesses + id;
                         $("#" + id).css('text-decoration', 'line-through');
                         total_guesses = total_guesses - 1;
 
                         if (total_guesses < 0) {
                           $("#error_msg").html("Darn. You are out of guesses. Sad!")
-                    } else { 
+                        } else { 
                           $("#numleft").html(total_guesses);
                           if (word.includes(id)) {
                             var index = word.indexOf(id);
@@ -41,13 +41,14 @@
 
                           $("#word").html(blanks);
                           }
-                            if (blanks == word) {
-                              $("#error_msg").text("YAY!! YOU WON!"); 
-                            }
                         }
+                        if (blanks == word) {
+                              $("#error_msg").text("YAY!! YOU WON!"); 
+                        }
+                    }
                           
                     }
-            }
+            
           
         )
           
@@ -111,9 +112,9 @@
   </p>
 
 </div>
-
-</body>
   
 <div id="error_msg" style="color: red;"></div>
+
+</body>
   
 </html>

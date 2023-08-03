@@ -31,9 +31,8 @@
 
                         if (total_guesses <= 0) {
                           $("#error_msg").html("Darn. You are out of guesses. Sad!")
-                    } else {
-                          $(#numleft).html(total_guesses);
-
+                    } else { 
+                          $("#numleft").html(total_guesses);
                           if (word.includes(id)) {
                             var index = word.indexof(id);
                             console.log("letter" + id + "is at index" + index");

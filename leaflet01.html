@@ -10,22 +10,34 @@
         crossorigin=""></script>
     
     <style>
-      #map { height: 400px; width: 700px }
+      #map1 { height: 400px; width: 700px }
       html, body { height: 100%; margin: 0; padding: 0; }
     </style>
 
     <script>
-      funciton initialize(){
+
+      var OpenStreetMap_HOT = L.titleLayer('https://{s}.title.openstreetmap.fr/hot/{z}/{x}/{y}.png',
+                                           { maxZoom 19, 
+                                             attribution: '&copy; <a href-"http://www.openstreetmap.org
+                                               /copright">OpenStreetMap</a>, Tiles courtesey of <a href
+                                               ="http://hot.osm.org" HOT OSM </a>"
+                                              
+                                          })
+
+
+      
+      funciton initialize() {
         var map = L.map('map1', {
           center: [ 43.7034, -72.2887 ], 
           zoom: 15
+          layers: [OpenStreet Map_HOT]
         })
       }
     </script>
     
   </head>
   <body onload="initialize()">
-        <h1>Hello Cammpus!</h1>
+        <h1>Hello Campus!</h1>
         <div id="map1"></div>
   </body>  
 </html>

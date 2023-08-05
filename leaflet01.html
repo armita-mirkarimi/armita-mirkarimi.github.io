@@ -16,23 +16,24 @@
 
     <script>
 
-      var OpenStreetMap_HOT = L.titleLayer('https://{s}.title.openstreetmap.fr/hot/{z}/{x}/{y}.png',
-                                           { maxZoom: 15, 
-                                             attribution: '&copy; <a href="http://www.openstreetmap.org
-                                               /copright">OpenStreetMap</a>, Tiles courtesey of <a href
-                                              ="http://hot.osm.org" HOT OSM </a>'
+      var OpenStreetMap_HOT = L.titleLayer('https://{s}.title.openstreetmap
+                                           .fr/hot/{z}/{x}/{y}.png',
+                                           { maxZoom 19, 
+                                               attribution: '&copy; <a href="http://www.openstreetmap.org
+                                                 /copright">OpenStreetMap</a>, Tiles courtesey of <a href
+                                                  ="http://hot.osm.org">HOT OSM</a>'
                                           })
       funciton initialize() {
         var map = L.map('map', {
           center: [ 43.7034, -72.2887 ], 
-          zoom: 15
+          zoom: 15,
           layers: [OpenStreetMap_HOT]
         })
       }
     </script>
     
   </head>
-  <body onload="initialize("map")">
+  <body onload="initialize()">
         <h1>Hello Campus!</h1>
         <div id="map"></div>
   </body>  

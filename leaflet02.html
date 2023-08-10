@@ -35,12 +35,12 @@
     })
 
     L.geoJson(nhcc, 
-              { color: "blue", 
+              { color: "red", 
                 weight: 3, 
                 opacity: .5,
                 onEachFeature: function(feature, layer) {
-                  layer.bindpopup("<b>Name: " +
-                  feature.properties.NAME + "</b>");
+                  layer.bindPopup("<b>ACRES: " +
+                  feature.properties.ACRES + "</b>");
                 }
                
               }).addTo(map);

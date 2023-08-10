@@ -34,7 +34,11 @@
         layers: [OpenStreetMap_HOT]
     })
 
-    L.geoJson(nhcc).addTo(map);
+    L.geoJson(nhcc, 
+              { color: "blue", 
+                weight: 5, 
+                opacity: .5
+              }).addTo(map);
     
   }
 </script> 

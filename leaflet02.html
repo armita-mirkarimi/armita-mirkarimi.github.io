@@ -33,6 +33,9 @@
         zoom: 15, // Larger numbers = closer to objects
         layers: [OpenStreetMap_HOT]
     })
+
+    L.geoJson(NH_Community_Center_Areas.geojson).addTo(map);
+    
   }
 </script> 
 </head>

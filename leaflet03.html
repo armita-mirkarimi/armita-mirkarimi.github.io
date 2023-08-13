@@ -60,19 +60,6 @@
       };
     }
 
-    <!-- Load GeoJSON data -->
-<script>
-  var nhcc;
-
-  // Load GeoJSON data using jQuery
-  $.getJSON("NH_Community_Center_Areas.geojson", function(data) {
-    nhcc = data;
-
-    // Call the initialize function once the GeoJSON data is loaded
-    initialize();
-  });
-</script>
-
     // Initialize the map
     function initialize() {
       var map = L.map('map', {

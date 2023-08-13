@@ -42,7 +42,7 @@
           attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, Tiles courtesy of <a href="http://hot.osm.org">HOT OSM</a>'
     });
 
-  var stamenlayer = new L.StamenTileLayer("toner");
+  var StamenLayer = new L.StamenTileLayer("toner");
   function lineSymbology(feature) {
     var Shape_Length = feature.properties.Shape_Length; 
     var linewidth = 2 
@@ -68,7 +68,7 @@
 
     var baseMaps = {
       "OSM": OpenStreetMap_HOT,
-      "Stamen": stamenlayer
+      "Stamen": StamenLayer
     };
 
     L.control.layers(baseMaps).addTo(map);

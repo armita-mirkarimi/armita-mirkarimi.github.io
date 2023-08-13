@@ -21,6 +21,7 @@
 <script> // This is where we create the map
 
   // First add some objects for base tiles
+  var acresLayer; 
   var OpenStreetMap_HOT = L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png',
     { maxZoom: 19,
           attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, Tiles courtesy of <a href="http://hot.osm.org">HOT OSM</a>'
@@ -34,13 +35,17 @@
         layers: [OpenStreetMap_HOT]
     })
 
-    L.geoJson(nhcc, 
+    acreslayer = L.geoJson(nhcc, 
               { color: "red", 
                 weight: 3, 
                 opacity: .5,
                 onEachFeature: function(feature, layer) {
                   layer.bindPopup("<b>ACRES: " +
-                  feature.properties.ACRES + "</b>");
+                  feature.properties.ACRES + "</b>,<br>" + 
+                  "Min. Latitude: " + 
+                  features.properties.Min_Latitude + "<br>" + 
+                  "Max. Latitude: " + 
+                  features.properties.Max_Latitude);
                 }
                
               }).addTo(map);

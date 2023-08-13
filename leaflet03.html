@@ -27,6 +27,22 @@
           attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, Tiles courtesy of <a href="http://hot.osm.org">HOT OSM</a>'
     });
 
+  function lineSymbology(feature) {
+    var Shape_Length = feature.properties.Shape_Length; 
+    var linewidth = 2 
+    var lineColor = "#319d17;"
+
+    if (Shape_Length > 10000) { lineColor = "#008080"; lineWidth = 4 } 
+    if (Shape_Length > 15000) { lineColor = "#3f48cc"; lineWidth = 6 } 
+
+    return {
+      color: lineColor, 
+      weight: lineWidth, 
+      opacity: 1
+    }; 
+
+  }
+
   // Then initialize the map itself
   function initialize() {
     var map = L.map('map', { // inside parentheses of L.map() should be name of div for map.
@@ -36,9 +52,7 @@
     })
 
     acreslayer = L.geoJson(nhcc, 
-              { color: "red", 
-                weight: 3, 
-                opacity: .5,
+              { style: lineSymbology,
                 onEachFeature: function(feature, layer) {
                   layer.bindPopup("<b>ACRES: " +
                   feature.properties.ACRES + "</b>,<br>" + 

@@ -42,10 +42,10 @@
                 onEachFeature: function(feature, layer) {
                   layer.bindPopup("<b>ACRES: " +
                   feature.properties.ACRES + "</b>,<br>" + 
-                  "Min. Latitude: " + 
-                  feature.properties.Min_Latitude + "<br>" + 
-                  "Max. Latitude: " + 
-                  feature.properties.Max_Latitude);
+                  "Min. Coordinates: " + 
+                  feature.properties.Min_Coordinates + "<br>" + 
+                  "Max. Coordinates: " + 
+                  feature.properties.Max_Coordinates);
                 }
                
               }).addTo(map);

@@ -59,24 +59,6 @@
 
   }
 
-  // Then initialize the map itself
-  function initialize() {
-    var map = L.map('map', { 
-      center: [43.7034, -72.2887],
-        zoom: 15   
-    }); 
-
-   var baseMaps = {
-  "OSM": OpenStreetMap_HOT,
-  "Stamen": stamenLayer
-};
-
-var overlayMaps = {
-  "NHCC Layer": NHCClayer
-};
-
-L.control.layers(baseMaps, overlayMaps).addTo(map);
-
     NHCClayer = L.geoJson(nhcc, {
                style: lineSymbology,
               onEachFeature: function(feature, layer) {
@@ -99,7 +81,24 @@ L.control.layers(baseMaps, overlayMaps).addTo(map);
             NHCClayer.addTo(map); 
         }
       })  
-  }
+
+  // Then initialize the map itself
+  function initialize() {
+    var map = L.map('map', { 
+      center: [43.7034, -72.2887],
+        zoom: 15   
+    }); 
+
+   var baseMaps = {
+  "OSM": OpenStreetMap_HOT,
+  "Stamen": stamenLayer
+};
+
+var overlayMaps = {
+  "NHCC Layer": NHCClayer
+};
+
+L.control.layers(baseMaps, overlayMaps).addTo(map);
 </script> 
 </head>
   

@@ -8,8 +8,6 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
   <!-- Jquery -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-  <!-- Stamen -->
-  <script type="text/javascript" src="http://maps.stamen.com/js/tile.stamen.js?v1.3.0"></script>
   <!-- Internal stylesheet -->
   <style>
     #map {
@@ -28,85 +26,83 @@
       background: #de907d;
     }
   </style>
-
-  <!-- Load GeoJSON data -->
-  <script src="NH_Community_Center_Areas.geojson"></script>
-    
-<script> // This is where we create the map
-
-  // First add some objects for base tiles
-  var NHCClayer;
-  var NHCCVisible = false;
-  var OpenStreetMap_HOT = L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png',
-    { maxZoom: 19,
-          attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, Tiles courtesy of <a href="http://hot.osm.org">HOT OSM</a>'
-    });
-  var stamenLayer = new L.Stamen.TileLayer("toner");
-  
-  function lineSymbology(feature) {
-    var Shape_Length = feature.properties.Shape_Length; 
-    var linewidth = 2 
-    var lineColor = "#319d17"; 
-
-    if (Shape_Length > 9501.5197505430751) { lineColor = "#008080"; linewidth = 8 } 
-    if (Shape_Length > 11844.011334866394) { lineColor = "#3f48cc"; linewidth = 4 } 
-
-    return {
-      color: lineColor, 
-      weight: linewidth, 
-      opacity: 1
-    }; 
-
-  }
-
-    NHCClayer = L.geoJson(nhcc, {
-               style: lineSymbology,
-              onEachFeature: function(feature, layer) {
-                  layer.bindPopup("<b>ACRES: " +
-                  feature.properties.ACRES + "</b>,<br>" + 
-                  "Shape_Length: " + 
-                  feature.properties.Shape_Length + "<br>" + 
-                  "Shape_Area: " + 
-                  feature.properties.Shape_Area);
-                }
-               
-              });
-
-      $("#toggleNHCC").click( function() { 
-        if (NHCCVisible) {
-          NHCCVisible = false; 
-          NHCClayer.removeFrom(map); 
-        } else {
-            NHCCVisible = true; 
-            NHCClayer.addTo(map); 
-        }
-      })  
-
-  // Then initialize the map itself
-  function initialize() {
-    var map = L.map('map', { 
-      center: [43.7034, -72.2887],
-        zoom: 15   
-    }); 
-
-   var baseMaps = {
-  "OSM": OpenStreetMap_HOT,
-  "Stamen": stamenLayer
-};
-
-var overlayMaps = {
-  "NHCC Layer": NHCClayer
-};
-
-L.control.layers(baseMaps, overlayMaps).addTo(map);
-</script> 
 </head>
   
-<body onload="initialize()"> 
+<body>
   <h1> Hello Campus!</h1>
   <div id="map"></div> 
   <div id="buttons">
     <button id="toggleNHCC">Toggle New Hampshire Community Center Layer.</button>
   </div>
+
+  <!-- Load GeoJSON data -->
+  <script src="NH_Community_Center_Areas.geojson"></script>
+  
+  <script> // This is where we create the map
+    var NHCClayer;
+    var NHCCVisible = false;
+    var OpenStreetMap_HOT = L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, Tiles courtesy of <a href="http://hot.osm.org">HOT OSM</a>'
+    });
+    
+    var stamenLayer = new L.Stamen.TileLayer("toner");
+
+    function lineSymbology(feature) {
+      var Shape_Length = feature.properties.Shape_Length;
+      var linewidth = 2;
+      var lineColor = "#319d17";
+
+      if (Shape_Length > 9501.5197505430751) { lineColor = "#008080"; linewidth = 8; }
+      if (Shape_Length > 11844.011334866394) { lineColor = "#3f48cc"; linewidth = 4; }
+
+      return {
+        color: lineColor,
+        weight: linewidth,
+        opacity: 1
+      };
+    }
+
+    // Initialize the map
+    function initialize() {
+      var map = L.map('map', {
+        center: [43.7034, -72.2887],
+        zoom: 15
+      });
+
+      var baseMaps = {
+        "OSM": OpenStreetMap_HOT,
+        "Stamen": stamenLayer
+      };
+
+      L.control.layers(baseMaps).addTo(map);
+
+      NHCClayer = L.geoJson(nhcc, {
+        style: lineSymbology,
+        onEachFeature: function (feature, layer) {
+          layer.bindPopup("<b>ACRES: " +
+            feature.properties.ACRES + "</b>,<br>" +
+            "Shape_Length: " +
+            feature.properties.Shape_Length + "<br>" +
+            "Shape_Area: " +
+            feature.properties.Shape_Area);
+        }
+
+      });
+
+      $("#toggleNHCC").click(function () {
+        if (NHCCVisible) {
+          NHCCVisible = false;
+          NHCClayer.removeFrom(map);
+        } else {
+          NHCCVisible = true;
+          NHCClayer.addTo(map);
+        }
+      });
+    }
+
+    // Call the initialize function once the DOM is loaded
+    $(document).ready(initialize);
+  </script>
 </body>
 </html>

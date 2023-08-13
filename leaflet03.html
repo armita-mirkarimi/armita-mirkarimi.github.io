@@ -42,6 +42,7 @@
 
   <script>
     // Initialize the map and layers
+    var map;
     var NHCClayer;
     var NHCCVisible = false;
     
@@ -71,19 +72,19 @@
         linewidth = 4;
       }
 
-        return {
+      return {
         color: lineColor,
         weight: linewidth,
         opacity: 1
       };
-
     }
 
     // Initialize the map
     function initializeMap() {
-      var map = L.map('map', {
+      map = L.map('map', {
         center: [43.7034, -72.2887],
-        zoom: 15
+        zoom: 15,
+        layers: [openStreetMapHot]
       });
 
       var baseMaps = {

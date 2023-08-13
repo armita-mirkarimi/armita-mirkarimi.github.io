@@ -28,36 +28,30 @@
       background: #de907d;
     }
   </style>
+
+ <!-- Load GeoJSON data -->
+  <script src="NH_Community_Center_Areas.geojson"></script>
+  
 </head>
-<body>
-  <!-- Page content -->
+  
+<body onload="initialize()">
   <h1>Hello Campus!</h1>
   <div id="map"></div>
   <div id="buttons">
     <button id="toggleNHCC">Toggle New Hampshire Community Center Layer</button>
   </div>
 
-  <!-- Load GeoJSON data -->
-  <script src="NH_Community_Center_Areas.geojson"></script>
-
   <script>
-    // Initialize the map and layers
-    var map;
     var NHCClayer;
     var NHCCVisible = false;
-    
-    // Create tile layers
     var openStreetMapHot = L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
       maxZoom: 19,
       attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, Tiles courtesy of <a href="http://hot.osm.org">HOT OSM</a>'
     });
-
     var thunderforestOutdoors = L.tileLayer('https://{s}.tile.thunderforest.com/outdoors/{z}/{x}/{y}.png?apikey=ac507f92f1f8429195ce2d6a4f7ab546', {
       attribution: '&copy; <a href="http://www.thunderforest.com/">Thunderforest</a>, &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
       maxZoom: 22
     });
-
-    // Define function for styling GeoJSON features
     function lineSymbology(feature) {
       var Shape_Length = feature.properties.Shape_Length;
       var linewidth = 2;
@@ -79,23 +73,20 @@
       };
     }
 
-    // Initialize the map
     function initializeMap() {
       map = L.map('map', {
         center: [43.7034, -72.2887],
         zoom: 15,
-        layers: [openStreetMapHot]
       });
 
       var baseMaps = {
-        "OpenStreetMap HOT": openStreetMapHot,
-        "Thunderforest Outdoors": thunderforestOutdoors
+        "OSM": openStreetMapHot,
+        "Stamen": thunderforestOutdoors
       };
 
       L.control.layers(baseMaps).addTo(map);
 
-      $.getJSON("NH_Community_Center_Areas.geojson", function(data) {
-        NHCClayer = L.geoJson(data, {
+       L.geoJson(ACRES, {
           style: lineSymbology,
           onEachFeature: function(feature, layer) {
             layer.bindPopup(
@@ -119,9 +110,6 @@
         });
       });
     }
-
-    // Call the initializeMap function once loaded
-    $(document).ready(initializeMap);
   </script>
 </body>
 </html>

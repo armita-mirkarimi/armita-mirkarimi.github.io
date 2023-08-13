@@ -66,6 +66,17 @@
         linewidth = 4;
       }
 
+      $.getJSON("NH_Community_Center_Areas.geojson", function(data) {
+        NHCClayer = L.geoJson(data, {
+          style: lineSymbology,
+          onEachFeature: function(feature, layer) {
+            layer.bindPopup(
+              "<b>ACRES: " + feature.properties.ACRES + "</b>,<br>" +
+              "Shape_Length: " + feature.properties.Shape_Length + "<br>" +
+              "Shape_Area: " + feature.properties.Shape_Area
+            );
+          }
+
       return {
         color: lineColor,
         weight: linewidth,
@@ -86,17 +97,6 @@
 
       L.control.layers(baseMaps).addTo(map);
 
-      // Load GeoJSON data and create layer
-      $.getJSON("NH_Community_Center_Areas.geojson", function(data) {
-        NHCClayer = L.geoJson(data, {
-          style: lineSymbology,
-          onEachFeature: function(feature, layer) {
-            layer.bindPopup(
-              "<b>ACRES: " + feature.properties.ACRES + "</b>,<br>" +
-              "Shape_Length: " + feature.properties.Shape_Length + "<br>" +
-              "Shape_Area: " + feature.properties.Shape_Area
-            );
-          }
         });
 
         $("#toggleNHCC").click(function() {

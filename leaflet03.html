@@ -42,10 +42,10 @@
                 onEachFeature: function(feature, layer) {
                   layer.bindPopup("<b>ACRES: " +
                   feature.properties.ACRES + "</b>,<br>" + 
-                  "Min. Coordinates: " + 
-                  feature.properties.Min_Coordinates + "<br>" + 
-                  "Max. Coordinates: " + 
-                  feature.properties.Max_Coordinates);
+                  "Shape_Length: " + 
+                  feature.properties.Shape_Length + "<br>" + 
+                  "Shape_Area: " + 
+                  feature.properties.Shape_Area);
                 }
                
               }).addTo(map);

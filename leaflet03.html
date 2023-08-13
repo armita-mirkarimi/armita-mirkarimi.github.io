@@ -68,13 +68,13 @@
                
               });
 
-      $("#toggleNCC").ready( function() { 
+      $("#toggleNCC").click( function() { 
         if (acresVisible) {
           acresisible = false; 
           acresVisible.removeFrom(map); 
         } else {
             acresVisible = true; 
-            acresisible.addTo(map); 
+            acresVisible.addTo(map); 
         }
       })  
   }

@@ -41,11 +41,11 @@
                 opacity: .5,
                 onEachFeature: function(feature, layer) {
                   layer.bindPopup("<b>ACRES: " +
-                  feature.properties.ACRES + "</b>,<br>" + 
+                  featur.properties.ACRES + "</b>,<br>" + 
                   "Min. Latitude: " + 
-                  features.properties.Min_Latitude + "<br>" + 
+                  feature.properties.Min_Latitude + "<br>" + 
                   "Max. Latitude: " + 
-                  features.properties.Max_Latitude);
+                  feature.properties.Max_Latitude);
                 }
                
               }).addTo(map);

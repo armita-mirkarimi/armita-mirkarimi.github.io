@@ -8,6 +8,9 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
   <!-- Jquery -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+  <!-- Stamen -->
+  <script type="text/javascript" src="http://maps.stamen.com/js/tile
+    .stamen.js?v1/3/0"></script>
   <!-- Internal stylesheet -->
   <style>
     #map {
@@ -40,6 +43,7 @@
           attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, Tiles courtesy of <a href="http://hot.osm.org">HOT OSM</a>'
     });
 
+  var stamenlayer = new L.stamenTilelayer("toner");
   function lineSymbology(feature) {
     var Shape_Length = feature.properties.Shape_Length; 
     var linewidth = 2 
@@ -60,9 +64,15 @@
   function initialize() {
     var map = L.map('map', { // inside parentheses of L.map() should be name of div for map.
       center: [43.7034, -72.2887],
-        zoom: 15, // Larger numbers = closer to objects
-        layers: [OpenStreetMap_HOT]
-    })
+        zoom: 15   
+    }); 
+
+    var baseMaps = { "OSM" : OpenStreetMap_HOT, 
+                      "Stamen" : stamenlayer
+
+                   } 
+
+    L.control.layers(baseMaps).addTo(maps);
 
     NHCClayer = L.geoJson(nhcc, {
                style: lineSymbology,

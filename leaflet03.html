@@ -29,12 +29,12 @@
     }
   </style>
 
- <!-- Load GeoJSON data -->
+  <!-- Load GeoJSON data -->
   <script src="NH_Community_Center_Areas.geojson"></script>
   
 </head>
   
-<body onload="initialize()">
+<body onload="initializeMap()"> <!-- Call the initializeMap function when the page loads -->
   <h1>Hello Campus!</h1>
   <div id="map"></div>
   <div id="buttons">
@@ -42,6 +42,7 @@
   </div>
 
   <script>
+    var map;
     var NHCClayer;
     var NHCCVisible = false;
     var openStreetMapHot = L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
@@ -77,6 +78,7 @@
       map = L.map('map', {
         center: [43.7034, -72.2887],
         zoom: 15,
+        layers: [openStreetMapHot] // Set the default base layer
       });
 
       var baseMaps = {
@@ -86,7 +88,8 @@
 
       L.control.layers(baseMaps).addTo(map);
 
-       L.geoJson(ACRES, {
+      $.getJSON("NH_Community_Center_Areas.geojson", function(data) {
+        NHCClayer = L.geoJson(data, {
           style: lineSymbology,
           onEachFeature: function(feature, layer) {
             layer.bindPopup(

@@ -16,7 +16,7 @@
   <style>
     #map { height: 400px; width: 700px; } <!-- This can percentage, viewport width, etc. Doesn't have to be pixels -->
     html, body {height: 100%; margin: 0; padding: 0; } <!-- Add styling to body of HTML -->
-    #button { padding: 10px; background: #de907d; }
+    #buttons { padding: 10px; background: #de907d; }
   </style>
 
 <script src="NH_Community_Center_Areas.geojson"></script>
@@ -24,8 +24,8 @@
 <script> // This is where we create the map
 
   // First add some objects for base tiles
-  var acresLayer; 
-  var acresVisible = false; 
+  var NCCLayer; 
+  var NCCVisible = false; 
   var OpenStreetMap_HOT = L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png',
     { maxZoom: 19,
           attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, Tiles courtesy of <a href="http://hot.osm.org">HOT OSM</a>'
@@ -55,7 +55,7 @@
         layers: [OpenStreetMap_HOT]
     })
 
-    acreslayer = L.geoJson(nhcc, 
+    NCClayer = L.geoJson(nhcc, 
               { style: lineSymbology,
                 onEachFeature: function(feature, layer) {
                   layer.bindPopup("<b>ACRES: " +
@@ -69,19 +69,19 @@
               });
 
       $("#toggleNCC").click( function() { 
-        if (acresVisible) {
-          acresVisible = false; 
-          acresVisible.removeFrom(map); 
+        if (NCCVisible) {
+          NCCVisible = false; 
+          NCCLayer.removeFrom(map); 
         } else {
-            acresVisible = true; 
-            acresVisible.addTo(map); 
+            NCCVisible = true; 
+            NCCLayer.addTo(map); 
         }
       })  
   }
 </script> 
 </head>
   
-<body onload="initialize()"> <!-- This is similar to document ready- only run once page is loaded -->
+<body onload="initialize()"> 
   <h1> Hello Campus!</h1>
   <div id="map"></div> 
   <div id="buttons">

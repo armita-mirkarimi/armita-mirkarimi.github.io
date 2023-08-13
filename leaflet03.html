@@ -66,13 +66,16 @@
         zoom: 15   
     }); 
 
-    var baseMaps = {
-      "OSM" : OpenStreetMap_HOT,
-      "Stamen" : stamenLayer
-    
-    }
+   var baseMaps = {
+  "OSM": OpenStreetMap_HOT,
+  "Stamen": stamenLayer
+};
 
-    L.control.layers(baseMaps).addTo(map);
+var overlayMaps = {
+  "NHCC Layer": NHCClayer
+};
+
+L.control.layers(baseMaps, overlayMaps).addTo(map);
 
     NHCClayer = L.geoJson(nhcc, {
                style: lineSymbology,

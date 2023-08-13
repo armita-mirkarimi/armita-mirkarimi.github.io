@@ -5,11 +5,12 @@
 <!-- Leaflet script library -->
      <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
-   crossorigin=""></script> <!-- Doesn't really matter what version of leafet you use, but good to specify one to lock it in -->
+   crossorigin=""></script> 
 <!-- CSS stylesheet for Leaflet-->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
    crossorigin=""/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <!-- Internal stylesheet -->
   <style>
     #map { height: 400px; width: 700px; } <!-- This can percentage, viewport width, etc. Doesn't have to be pixels -->
@@ -67,24 +68,21 @@
               });
 
       $("#toggleNCC").click( function() { 
-        if(acresVisible) {
+        if (acresVisible) {
           acresVisible = false; 
           acresVisible.removeFrom(map); 
         } else {
             acresVisible = true; 
             acresVisible.addTo(map); 
         }
-      })
-
-
-    
+      })  
   }
 </script> 
 </head>
   
 <body onload="initialize()"> <!-- This is similar to document ready- only run once page is loaded -->
   <h1> Hello Campus!</h1>
-  <div id="map"></div> <!-- This creates a div that will house our leaflet map. Can make multiple divs if need multiple maps -->
+  <div id="map"></div> 
   <div id="buttons">
     <button id="toggleNCC">Toggle New Hampshire Community Center Layer.</button>
   </div>

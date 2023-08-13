@@ -5,7 +5,6 @@
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-  <script src="https://maps.stamen.com/js/tile.stamen.js?v1.3.0"></script>
   <style>
     #map {
       height: 400px;
@@ -24,11 +23,18 @@
     }
   </style>
 </head>
+<body>
+  <h1> Hello Campus!</h1>
+  <div id="map"></div> 
+  <div id="buttons">
+    <button id="toggleNHCC">Toggle New Hampshire Community Center Layer.</button>
+  </div>
 
   <!-- Load GeoJSON data -->
   <script src="NH_Community_Center_Areas.geojson"></script>
   
-  <script> // This is where we create the map
+  <script>
+    // This is where we create the map
     var NHCClayer;
     var NHCCVisible = false;
     var OpenStreetMap_HOT = L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
@@ -67,38 +73,33 @@
 
       L.control.layers(baseMaps).addTo(map);
 
-      NHCClayer = L.geoJson(nhcc, {
-        style: lineSymbology,
-        onEachFeature: function (feature, layer) {
-          layer.bindPopup("<b>ACRES: " +
-            feature.properties.ACRES + "</b>,<br>" +
-            "Shape_Length: " +
-            feature.properties.Shape_Length + "<br>" +
-            "Shape_Area: " +
-            feature.properties.Shape_Area);
-        }
-      });
+      $.getJSON("NH_Community_Center_Areas.geojson", function(data) {
+        NHCClayer = L.geoJson(data, {
+          style: lineSymbology,
+          onEachFeature: function (feature, layer) {
+            layer.bindPopup("<b>ACRES: " +
+              feature.properties.ACRES + "</b>,<br>" +
+              "Shape_Length: " +
+              feature.properties.Shape_Length + "<br>" +
+              "Shape_Area: " +
+              feature.properties.Shape_Area);
+          }
+        });
 
-      $("#toggleNHCC").click(function () {
-        if (NHCCVisible) {
-          NHCCVisible = false;
-          NHCClayer.removeFrom(map);
-        } else {
-          NHCCVisible = true;
-          NHCClayer.addTo(map);
-        }
+        $("#toggleNHCC").click(function () {
+          if (NHCCVisible) {
+            NHCCVisible = false;
+            NHCClayer.removeFrom(map);
+          } else {
+            NHCCVisible = true;
+            NHCClayer.addTo(map);
+          }
+        });
       });
     }
 
     // Call the initialize function once the DOM is loaded
     $(document).ready(initialize);
   </script>
-
-  <body>
-  <h1> Hello Campus!</h1>
-  <div id="map"></div> 
-  <div id="buttons">
-    <button id="toggleNHCC">Toggle New Hampshire Community Center Layer.</button>
-  </div>
 </body>
 </html>

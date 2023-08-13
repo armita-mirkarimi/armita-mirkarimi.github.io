@@ -42,7 +42,6 @@
   </div>
 
   <script>
-    var nhcc;
     var NHCClayer;
     var NHCCVisible = false;
     var openStreetMapHot = L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
@@ -74,17 +73,16 @@
       };
     }
 
-    function initializeMap() {
-      map = L.map('map', {
+    function initialize() {
+      var map = L.map('map', {
         center: [43.7034, -72.2887],
         zoom: 15,
-        layers: [openStreetMapHot] // Set the default base layer
       });
 
       var baseMaps = {
         "OSM": openStreetMapHot,
         "Stamen": thunderforestOutdoors
-      };
+      }
 
       L.control.layers(baseMaps).addTo(map);
 

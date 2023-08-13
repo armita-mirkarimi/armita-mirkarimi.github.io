@@ -23,6 +23,7 @@
 
   // First add some objects for base tiles
   var acresLayer; 
+  car acresVisible = false; 
   var OpenStreetMap_HOT = L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png',
     { maxZoom: 19,
           attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, Tiles courtesy of <a href="http://hot.osm.org">HOT OSM</a>'
@@ -63,7 +64,19 @@
                   feature.properties.Shape_Area);
                 }
                
-              }).addTo(map);
+              });
+
+      $("#toggleNCC").click( function() { 
+        if(acresVisible) {
+          acresVisible = false; 
+          acresVisible.removeFrom(map); 
+        } else {
+            acresVisible = true; 
+            acresVisible.addTo(map); 
+        }
+      })
+
+
     
   }
 </script> 

@@ -9,12 +9,12 @@
   <!-- Jquery -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
   <!-- Stamen -->
-  <script type="text/javascript" src="https://maps.stamen.com/js/tile.stamen.js?v1/3/0"></script>
+  <script type="text/javascript" src="https://maps.stamen.com/js/tile.stamen.js?v1.3.0"></script>
   <!-- Internal stylesheet -->
   <style>
     #map {
       height: 400px;
-      width: 700px;
+      width: 500px;
     }
 
     html, body {
@@ -41,8 +41,8 @@
     { maxZoom: 19,
           attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, Tiles courtesy of <a href="http://hot.osm.org">HOT OSM</a>'
     });
-
-  var StamenLayer = L.stamen.tileLayer("toner");
+  var stamenLayer = new L.Stamen.TileLayer("toner");
+  
   function lineSymbology(feature) {
     var Shape_Length = feature.properties.Shape_Length; 
     var linewidth = 2 
@@ -67,9 +67,10 @@
     }); 
 
     var baseMaps = {
-      "OSM": OpenStreetMap_HOT,
-      "Stamen": StamenLayer
-    };
+      "OSM" : OpenStreetMap_HOT,
+      "Stamen" : stamenLayer
+    
+    }
 
     L.control.layers(baseMaps).addTo(map);
 

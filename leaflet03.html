@@ -105,18 +105,16 @@
         });
 
         $("#toggleNHCC").click(function() {
-  console.log("Button clicked!");
-
-  if (NHCCVisible) {
-    NHCCVisible = false;
-    NHCClayer.removeFrom(map);
-    console.log("Layer removed from map.");
-  } else {
-    NHCCVisible = true;
-    NHCClayer.addTo(map);
-    console.log("Layer added to map.");
-  }
-});
+          if (NHCCVisible) {
+            NHCCVisible = false;
+            map.removeLayer(NHCClayer);
+            console.log("Layer removed from map.");
+          } else {
+            NHCCVisible = true;
+            NHCClayer.addTo(map);
+            console.log("Layer added to map.");
+          }
+        });
       });
     }
 

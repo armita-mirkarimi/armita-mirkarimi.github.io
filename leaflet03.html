@@ -29,7 +29,7 @@
     }
   </style>
 
-  <!-- Load GeoJSON data -->
+ <!-- Load GeoJSON data -->
   <script src="NH_Community_Center_Areas.geojson"></script>
   
 </head>
@@ -88,6 +88,7 @@
 
       L.control.layers(baseMaps).addTo(map);
 
+      // Load GeoJSON data and create layer
       $.getJSON("NH_Community_Center_Areas.geojson", function(data) {
         NHCClayer = L.geoJson(data, {
           style: lineSymbology,

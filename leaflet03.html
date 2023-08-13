@@ -2,21 +2,27 @@
 <html>
 <head>
   <title>Hello Campus!</title>
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  
+  <!-- Include Leaflet CSS and JavaScript -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  
+  <!-- Include jQuery for interactions -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+  
+  <!-- Define CSS styles -->
   <style>
     #map {
       height: 400px;
       width: 500px;
     }
-
+    
     html, body {
       height: 100%;
       margin: 0;
       padding: 0;
     }
-
+    
     #buttons {
       padding: 10px;
       background: #de907d;
@@ -24,36 +30,46 @@
   </style>
 </head>
 <body>
-  <h1> Hello Campus!</h1>
-  <div id="map"></div> 
+  <!-- Page content -->
+  <h1>Hello Campus!</h1>
+  <div id="map"></div>
   <div id="buttons">
-    <button id="toggleNHCC">Toggle New Hampshire Community Center Layer.</button>
+    <button id="toggleNHCC">Toggle New Hampshire Community Center Layer</button>
   </div>
 
   <!-- Load GeoJSON data -->
   <script src="NH_Community_Center_Areas.geojson"></script>
-  
+
   <script>
-    // This is where we create the map
+    // Initialize the map and layers
     var NHCClayer;
     var NHCCVisible = false;
-    var OpenStreetMap_HOT = L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
+    
+    // Create tile layers
+    var openStreetMapHot = L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
       maxZoom: 19,
       attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, Tiles courtesy of <a href="http://hot.osm.org">HOT OSM</a>'
     });
-    
-    var Thunderforest_Outdoors = L.tileLayer('https://{s}.tile.thunderforest.com/outdoors/{z}/{x}/{y}.png?apikey=ac507f92f1f8429195ce2d6a4f7ab546', {
-    attribution: '&copy; <a href="http://www.thunderforest.com/">Thunderforest</a>, &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-    maxZoom: 22
-});
 
+    var thunderforestOutdoors = L.tileLayer('https://{s}.tile.thunderforest.com/outdoors/{z}/{x}/{y}.png?apikey=ac507f92f1f8429195ce2d6a4f7ab546', {
+      attribution: '&copy; <a href="http://www.thunderforest.com/">Thunderforest</a>, &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      maxZoom: 22
+    });
+
+    // Define function for styling GeoJSON features
     function lineSymbology(feature) {
       var Shape_Length = feature.properties.Shape_Length;
       var linewidth = 2;
       var lineColor = "#319d17";
 
-      if (Shape_Length > 9501.5197505430751) { lineColor = "#008080"; linewidth = 8; }
-      if (Shape_Length > 11844.011334866394) { lineColor = "#3f48cc"; linewidth = 4; }
+      if (Shape_Length > 9501.5197505430751) {
+        lineColor = "#008080";
+        linewidth = 8;
+      }
+      if (Shape_Length > 11844.011334866394) {
+        lineColor = "#3f48cc";
+        linewidth = 4;
+      }
 
       return {
         color: lineColor,
@@ -63,15 +79,15 @@
     }
 
     // Initialize the map
-    function initialize() {
+    function initializeMap() {
       var map = L.map('map', {
         center: [43.7034, -72.2887],
         zoom: 15
       });
 
       var baseMaps = {
-        "OSM": OpenStreetMap_HOT,
-        "Stamen": Thunderforest_Outdoors
+        "OpenStreetMap HOT": openStreetMapHot,
+        "Thunderforest Outdoors": thunderforestOutdoors
       };
 
       L.control.layers(baseMaps).addTo(map);
@@ -79,17 +95,16 @@
       $.getJSON("NH_Community_Center_Areas.geojson", function(data) {
         NHCClayer = L.geoJson(data, {
           style: lineSymbology,
-          onEachFeature: function (feature, layer) {
-            layer.bindPopup("<b>ACRES: " +
-              feature.properties.ACRES + "</b>,<br>" +
-              "Shape_Length: " +
-              feature.properties.Shape_Length + "<br>" +
-              "Shape_Area: " +
-              feature.properties.Shape_Area);
+          onEachFeature: function(feature, layer) {
+            layer.bindPopup(
+              "<b>ACRES: " + feature.properties.ACRES + "</b>,<br>" +
+              "Shape_Length: " + feature.properties.Shape_Length + "<br>" +
+              "Shape_Area: " + feature.properties.Shape_Area
+            );
           }
         });
 
-        $("#toggleNHCC").click(function () {
+        $("#toggleNHCC").click(function() {
           if (NHCCVisible) {
             NHCCVisible = false;
             NHCClayer.removeFrom(map);
@@ -101,8 +116,8 @@
       });
     }
 
-    // Call the initialize function once the DOM is loaded
-    $(document).ready(initialize);
+    // Call the initializeMap function once the DOM is loaded
+    $(document).ready(initializeMap);
   </script>
 </body>
 </html>

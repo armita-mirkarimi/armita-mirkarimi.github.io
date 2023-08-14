@@ -37,7 +37,7 @@
   </div>
 
   <script>
-    $(document).ready(function() { // Ensure jQuery is ready
+    $(document).ready(function() { // Make sure jQuery is ready
       var NHCCVisible = true;
       var openStreetMapHot = L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
         maxZoom: 19,
@@ -49,9 +49,9 @@
       });
 
       function lineSymbology(feature) {
-        // Your line symbology function
+        // line symbology function
         return {
-          // Provide the appropriate style properties here
+          // style properties 
         };
       }
 
@@ -59,7 +59,7 @@
         var map = L.map('map', {
           center: [43.7034, -72.2887],
           zoom: 15,
-          layers: [openStreetMapHot] // Set initial layer
+          layers: [openStreetMapHot] // initial layer
         });
 
         var baseMaps = {
@@ -84,7 +84,7 @@
           var NHCClayer = L.geoJson(response.responseJSON, {
             style: lineSymbology,
             onEachFeature: function(feature, layer) {
-              // Your popup content
+              // popup content
             }
           }).addTo(map);
           
@@ -104,7 +104,7 @@
         });
       }
 
-      initialize(); // Call the initialize function
+      initialize(); // initialize function
     });
   </script>
 </body>

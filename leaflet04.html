@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Hello Campus!</title> 
+  
+  <!-- Include Leaflet CSS and JavaScript -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  
+  <!-- Include jQuery for interactions -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+  
+  <!-- Define CSS styles -->
+  <style>
+    #map {
+      height: 400px;
+      width: 500px;
+    }
+    
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+    
+    #buttons {
+      padding: 10px;
+      background: #de907d;
+    }
+  </style>
+</head>
+<body>
+  <h1>Hello Campus!</h1>
+  <div id="map"></div>
+  <div id="buttons">
+    <button id="toggleNHCC">Toggle New Hampshire Community Center Layer</button>
+  </div>
+
+  <script>
+    $(document).ready(function() { // Ensure jQuery is ready
+      var NHCClayer;
+      var NHCCVisible = false;
+      var openStreetMapHot = L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, Tiles courtesy of <a href="http://hot.osm.org">HOT OSM</a>'
+      });
+      var thunderforestOutdoors = L.tileLayer('https://{s}.tile.thunderforest.com/outdoors/{z}/{x}/{y}.png?apikey=ac507f92f1f8429195ce2d6a4f7ab546', {
+        attribution: '&copy; <a href="http://www.thunderforest.com/">Thunderforest</a>, &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+        maxZoom: 22
+      });
+
+      function lineSymbology(feature) {
+        // Your line symbology function
+      }
+
+      function initialize() {
+        var map = L.map('map', {
+          center: [43.7034, -72.2887],
+          zoom: 15,
+          layers: [openStreetMapHot] // Set initial layer
+        });
+
+        var baseMaps = {
+          "OSM": openStreetMapHot,
+          "Stamen": thunderforestOutdoors
+        };
+
+        L.control.layers(baseMaps).addTo(map);
+
+        // Load GeoJSON data and create layer
+        $.getJSON("NH_Community_Center_Areas.geojson", function(data) { 
+          NHCClayer = L.geoJson(data, {
+            style: lineSymbology,
+            onEachFeature: function(feature, layer) {
+              // Your popup content
+            }
+          });
+
+          $("#toggleNHCC").click(function() {
+            if (NHCCVisible) {
+              NHCCVisible = false;
+              map.removeLayer(NHCClayer);
+              console.log("Layer removed from map.");
+            } else {
+              NHCCVisible = true;
+              NHCClayer.addTo(map);
+              console.log("Layer added to map.");
+            }
+          });
+        });
+      }
+
+      initialize(); // Call the initialize function
+    });
+  </script>
+</body>
+</html>

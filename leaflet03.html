@@ -28,13 +28,8 @@
       background: #de907d;
     }
   </style>
-
-  <!-- Load GeoJSON data -->
-  <script src="NH_Community_Center_Areas.geojson"></script>
-  
 </head>
-  
-<body onload="initialize()">
+<body>
   <h1>Hello Campus!</h1>
   <div id="map"></div>
   <div id="buttons">
@@ -42,76 +37,61 @@
   </div>
 
   <script>
-    var NHCClayer;
-    var NHCCVisible = false;
-    var openStreetMapHot = L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
-      maxZoom: 19,
-      attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, Tiles courtesy of <a href="http://hot.osm.org">HOT OSM</a>'
-    });
-    var thunderforestOutdoors = L.tileLayer('https://{s}.tile.thunderforest.com/outdoors/{z}/{x}/{y}.png?apikey=ac507f92f1f8429195ce2d6a4f7ab546', {
-      attribution: '&copy; <a href="http://www.thunderforest.com/">Thunderforest</a>, &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-      maxZoom: 22
-    });
-    function lineSymbology(feature) {
-      var Shape_Length = feature.properties.Shape_Length;
-      var linewidth = 2;
-      var lineColor = "#319d17";
-
-      if (Shape_Length > 9501.5197505430751) {
-        lineColor = "#008080";
-        linewidth = 8;
-      }
-      if (Shape_Length > 11844.011334866394) {
-        lineColor = "#3f48cc";
-        linewidth = 4;
-      }
-
-      return {
-        color: lineColor,
-        weight: linewidth,
-        opacity: 1
-      };
-    }
-
-    function initialize() {
-      var map = L.map('map', {
-        center: [43.7034, -72.2887],
-        zoom: 15,
+    $(document).ready(function() { // Ensure jQuery is ready
+      var NHCClayer;
+      var NHCCVisible = false;
+      var openStreetMapHot = L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, Tiles courtesy of <a href="http://hot.osm.org">HOT OSM</a>'
+      });
+      var thunderforestOutdoors = L.tileLayer('https://{s}.tile.thunderforest.com/outdoors/{z}/{x}/{y}.png?apikey=ac507f92f1f8429195ce2d6a4f7ab546', {
+        attribution: '&copy; <a href="http://www.thunderforest.com/">Thunderforest</a>, &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+        maxZoom: 22
       });
 
-      var baseMaps = {
-        "OSM": openStreetMapHot,
-        "Stamen": thunderforestOutdoors
-      };
+      function lineSymbology(feature) {
+        // Your line symbology function
+      }
 
-      L.control.layers(baseMaps).addTo(map);
-
-      // Load GeoJSON data and create layer
-      $.getJSON("NH_Community_Center_Areas.geojason", function(data) { 
-        NHCClayer = L.geoJson(data, {
-          style: lineSymbology,
-          onEachFeature: function(feature, layer) {
-            layer.bindPopup(
-              "<b>ACRES: " + feature.properties.ACRES + "</b>,<br>" +
-              "Shape_Length: " + feature.properties.Shape_Length + "<br>" +
-              "Shape_Area: " + feature.properties.Shape_Area
-            );
-          }
+      function initialize() {
+        var map = L.map('map', {
+          center: [43.7034, -72.2887],
+          zoom: 15,
+          layers: [openStreetMapHot] // Set initial layer
         });
 
-        $("#toggleNHCC").click(function() {
-          if (NHCCVisible) {
-            NHCCVisible = false;
-            map.removeLayer(NHCClayer);
-            console.log("Layer removed from map.");
-          } else {
-            NHCCVisible = true;
-            NHCClayer.addTo(map);
-            console.log("Layer added to map.");
-          }
+        var baseMaps = {
+          "OSM": openStreetMapHot,
+          "Stamen": thunderforestOutdoors
+        };
+
+        L.control.layers(baseMaps).addTo(map);
+
+        // Load GeoJSON data and create layer
+        $.getJSON("NH_Community_Center_Areas.geojson", function(data) { 
+          NHCClayer = L.geoJson(data, {
+            style: lineSymbology,
+            onEachFeature: function(feature, layer) {
+              // Your popup content
+            }
+          });
+
+          $("#toggleNHCC").click(function() {
+            if (NHCCVisible) {
+              NHCCVisible = false;
+              map.removeLayer(NHCClayer);
+              console.log("Layer removed from map.");
+            } else {
+              NHCCVisible = true;
+              NHCClayer.addTo(map);
+              console.log("Layer added to map.");
+            }
+          });
         });
-      });
-    }
+      }
+
+      initialize(); // Call the initialize function
+    });
   </script>
 </body>
 </html>

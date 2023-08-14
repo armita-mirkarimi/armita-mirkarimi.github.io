@@ -87,7 +87,7 @@
       L.control.layers(baseMaps).addTo(map);
 
       // Load GeoJSON data and create layer
-      $.getJSON("NH_Community_Center_Areas.geojason", function(data) {
+      $.getJSON("NH_Community_Center_Areas.geojason", function(data) { 
         NHCClayer = L.geoJson(data, {
           style: lineSymbology,
           onEachFeature: function(feature, layer) {

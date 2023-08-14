@@ -33,13 +33,12 @@
   <h1>Hello Campus!</h1>
   <div id="map"></div>
   <div id="buttons">
-    <button id="toggleNHCC">Toggle New Hampshire Community Center Layer</button>
+    <button id="toggleNHCC" hidden>Toggle New Hampshire Community Center Layer</button>
   </div>
 
   <script>
     $(document).ready(function() { // Ensure jQuery is ready
-      var NHCClayer;
-      var NHCCVisible = false;
+      var NHCCVisible = true;
       var openStreetMapHot = L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
         maxZoom: 19,
         attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, Tiles courtesy of <a href="http://hot.osm.org">HOT OSM</a>'
@@ -67,28 +66,39 @@
 
         L.control.layers(baseMaps).addTo(map);
 
-        // Load GeoJSON data and create layer
-        $.getJSON("NH_Community_Center_Areas.geojson", function(data) { 
-          NHCClayer = L.geoJson(data, {
-            style: lineSymbology,
-            onEachFeature: function(feature, layer) {
-              // Your popup content
-            }
-          });
+        var response = $.ajax({
+          url: "NH_Community_Center_Areas.geojson", 
+          dataType: "json", 
+          success: console.log("community center data loaded!"), 
+          error: function (xhr) {
+            alert(xhr.statusText); 
+          } 
 
-          $("#toggleNHCC").click(function() {
-            if (NHCCVisible) {
-              NHCCVisible = false;
-              map.removeLayer(NHCClayer);
-              console.log("Layer removed from map.");
-            } else {
-              NHCCVisible = true;
-              NHCClayer.addTo(map);
-              console.log("Layer added to map.");
-            }
-          });
-        });
-      }
+        }); 
+
+        $.when(response).done(function() {
+
+        // Load GeoJSON data and create layer
+               var NHCClayer = L.geoJson(response.responseJSON, {
+                style: lineSymbology,
+                onEachFeature: function(feature, layer) {
+              // Your popup content
+                  }
+              });
+                #("toggleTrails").show(); 
+                $("#toggleNHCC").click(function() {
+                  if (NHCCVisible) {
+                    NHCCVisible = false;
+                    map.removeLayer(NHCClayer);
+                    console.log("Layer removed from map.");
+                  } else {
+                        NHCCVisible = true;
+                        NHCClayer.addTo(map);
+                        console.log("Layer added to map.");
+                      }
+                    })
+                  });
+                }
 
       initialize(); // Call the initialize function
     });

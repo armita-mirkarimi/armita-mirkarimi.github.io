@@ -50,6 +50,9 @@
 
       function lineSymbology(feature) {
         // Your line symbology function
+        return {
+          // Provide the appropriate style properties here
+        };
       }
 
       function initialize() {
@@ -69,36 +72,37 @@
         var response = $.ajax({
           url: "NH_Community_Center_Areas.geojson", 
           dataType: "json", 
-          success: console.log("community center data loaded!"), 
+          success: function(data) {
+            console.log("community center data loaded!");
+          }, 
           error: function (xhr) {
             alert(xhr.statusText); 
-          } 
-
+          }
         }); 
 
         $.when(response).done(function() {
-
-        // Load GeoJSON data and create layer
-               var NHCClayer = L.geoJson(response.responseJSON, {
-                style: lineSymbology,
-                onEachFeature: function(feature, layer) {
+          var NHCClayer = L.geoJson(response.responseJSON, {
+            style: lineSymbology,
+            onEachFeature: function(feature, layer) {
               // Your popup content
-                  }
-              }).addTo(map);
-                $("toggleNHCC").show(); 
-                $("#toggleNHCC").click(function() {
-                  if (NHCCVisible) {
-                    NHCCVisible = false;
-                    map.removeLayer(NHCClayer);
-                    console.log("Layer removed from map.");
-                  } else {
-                        NHCCVisible = true;
-                        NHCClayer.addTo(map);
-                        console.log("Layer added to map.");
-                      }
-                    })
-                  });
-                }
+            }
+          }).addTo(map);
+          
+          $("#toggleNHCC").show(); 
+          
+          $("#toggleNHCC").click(function() {
+            if (NHCCVisible) {
+              NHCCVisible = false;
+              map.removeLayer(NHCClayer);
+              console.log("Layer removed from map.");
+            } else {
+              NHCCVisible = true;
+              NHCClayer.addTo(map);
+              console.log("Layer added to map.");
+            }
+          });
+        });
+      }
 
       initialize(); // Call the initialize function
     });

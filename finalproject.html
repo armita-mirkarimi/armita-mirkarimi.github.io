@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Hello Campus!</title>
+  <title>Mapping Iran's Contemporary Protests</title>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
     crossorigin=""></script>
@@ -45,23 +45,6 @@
         })
         .catch(error => {
           console.error("Error loading GeoJSON data:", error);
-        });
-
-      // new GeoJSON layer
-      fetch("{"ADM0_PCODE":"IR","ADM0_EN":"Iran (Islamic Republic of)","Year":"2019","data":[{"ADM0_PCODE":"IR","ADM0_EN":"Iran (Islamic Republic of)","T_TL":79926270,"F_TL":39427828,"M_TL":40498442}]}")
-        .then(response => response.json())
-        .then(data => {
-          L.geoJson(data, {
-            color: "blue",
-            weight: 2,
-            opacity: 0.7,
-            onEachFeature: function(feature, layer) {
-              layer.bindPopup("<b>Name: " + feature.properties.Name + "</b>");
-            }
-          }).addTo(map);
-        })
-        .catch(error => {
-          console.error("Error loading new GeoJSON data:", error);
         });
     }
   </script>

@@ -39,7 +39,7 @@
             weight: 3,
             opacity: 0.5,
             onEachFeature: function(feature, layer) {
-              layer.bindPopup("<b>ACRES: " + feature.properties.ACRES + "</b>");
+              layer.bindPopup("<b>NAME: " + feature.properties.NAME + "</b>");
             }
           }).addTo(map);
         })
@@ -48,7 +48,7 @@
         });
 
       // new GeoJSON layer
-      fetch("NH_Designated_Rivers_24K.geojson")
+      fetch("{"ADM0_PCODE":"IR","ADM0_EN":"Iran (Islamic Republic of)","Year":"2019","data":[{"ADM0_PCODE":"IR","ADM0_EN":"Iran (Islamic Republic of)","T_TL":79926270,"F_TL":39427828,"M_TL":40498442}]}")
         .then(response => response.json())
         .then(data => {
           L.geoJson(data, {
@@ -56,7 +56,7 @@
             weight: 2,
             opacity: 0.7,
             onEachFeature: function(feature, layer) {
-              layer.bindPopup("<b>Name: " + feature.properties.Class + "</b>");
+              layer.bindPopup("<b>Name: " + feature.properties.Name + "</b>");
             }
           }).addTo(map);
         })

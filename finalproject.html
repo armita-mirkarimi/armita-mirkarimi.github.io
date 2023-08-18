@@ -64,7 +64,7 @@
             weight: 3,
             opacity: 0.5,
             onEachFeature: function (feature, layer) {
-              layer.bindPopup("<b>Population: " + feature.properties.POPULATION + "</b><br/><b>Name: " + feature.properties.NAME_ + "</b>");
+              layer.bindPopup("<b>Population: " + feature.properties.POPULATION"</b>;
             }
           }).addTo(layerGroup);  // Add to the layer group
         },
@@ -80,7 +80,7 @@
           var protestLayer = L.geoJson(data, {
             style: symbology,
             onEachFeature: function (feature, layer) {
-              layer.bindPopup("<b>Name: " + feature.properties.NAME + "</b><br/><b>DEATHS: " + feature.properties.DEATHS_ + "</b>");
+              layer.bindPopup("<b>Deaths: " + feature.properties.DEATHS"</b>;
             }
           }).addTo(layerGroup);  // Add to the layer group
         },

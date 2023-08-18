@@ -12,8 +12,6 @@
     #map { height: 400px; width: 700px; }
     html, body { height: 100%; margin: 0; padding: 0; }
   </style>
-  <script src="NH_Community_Center_Areas.geojson"></script>
-  <script src="NH_Designated_Rivers_24K.geojson"></script>
 </head>
 
 <body onload="initialize()">
@@ -32,24 +30,22 @@
         layers: [OpenStreetMap_HOT]
       });
 
-      L.geoJson(nhcc, {
-        color: "red",
-        weight: 3,
-        opacity: 0.5,
-        onEachFeature: function(feature, layer) {
-          layer.bindPopup("<b>ACRES: " + feature.properties.ACRES + "</b>");
-        }
-      }).addTo(map);
-
-      // new GeoJSON layer
-      L.geoJson(NH_Designated_Rivers_24k, {  // Replace 'new_layer' with the actual variable for your new GeoJSON data
-        color: "blue",       // Customize styling
-        weight: 2,
-        opacity: 0.7,
-        onEachFeature: function(feature, layer) {
-          layer.bindPopup("<b>Name: " + feature.properties.Class + "</b>"); // Customize popup content
-        }
-      }).addTo(map);
+      // Load and add the GeoJSON layer using AJAX
+      fetch("NH_Community_Center_Areas.geojson")
+        .then(response => response.json())
+        .then(data => {
+          L.geoJson(data, {
+            color: "red",
+            weight: 3,
+            opacity: 0.5,
+            onEachFeature: function(feature, layer) {
+              layer.bindPopup("<b>ACRES: " + feature.properties.ACRES + "</b>");
+            }
+          }).addTo(map);
+        })
+        .catch(error => {
+          console.error("Error loading GeoJSON data:", error);
+        });
     }
   </script>
 </body>

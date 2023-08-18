@@ -66,19 +66,59 @@
 
   <h1 style="color: #FFFFFF;
              background: #B30000;
-            text-shadow: 0 1px 0 #CCCCCC, 0 2px 0 #c9c9c9, 0 3px 0 #bbb, 0 4px 0 #b9b9b9, 0 5px 0 #aaa, 0 6px 1px rgba(0,0,0,.1), 0 0 5px rgba(0,0,0,.1), 0 1px 3px rgba(0,0,0,.3), 0 3px 5px rgba(0,0,0,.2), 0 5px 10px rgba(0,0,0,.25), 0 10px 10px rgba(0,0,0,.2), 0 20px 20px rgba(0,0,0,.15);
-            color: #FFFFFF;
-            background: #B30000;"
+             color: #FFFFFF;
+             background: #B30000;"
     >Let's start with understanding the population landscape of Iran before diving into the geographies of every protest   
   </h1>
 
+    <!-- This is my first map -->
 
-
-
-
-  
- 
   <div id="map"></div>
+
+  <script>
+    // Define symbology function outside the .done function
+    function symbology(feature) {
+      var population = feature.properties.POPULATION;
+      var lineColor = "red";
+
+      return {
+        color: lineColor,
+        weight: 3,
+        opacity: 0.5
+      };
+    }
+
+    $(document).ready(function () {
+      var map = L.map("map").setView([32.4279, 53.6880], 4);
+
+      var title = L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        maxZoom: 19,
+        attribution: 'Your attribution here'
+      }).addTo(map);
+
+      // Create a layer group for population and protest data
+      var populationprotest = L.layerGroup().addTo(map);
+
+      var response = $.ajax({
+        url: "Iran_Population.geojson",
+        dataType: "json",
+        success: function (data) {
+          var populationLayer = L.geoJson(data, {
+            color: "#002800",
+            weight: 3,
+            opacity: 0.5,
+            onEachFeature: function (feature, layer) {
+              layer.bindPopup("<b>Population: " + feature.properties.POPULATION + "</b>");
+            }
+          }).addTo(populationprotest);  // Add to the layer group
+        },
+        error: function (xhr) {
+          alert(xhr.statusText);
+        }
+      });
+  </script>
+ 
+  <div id="map1"></div>
 
   <script>
     // Define symbology function outside the .done function

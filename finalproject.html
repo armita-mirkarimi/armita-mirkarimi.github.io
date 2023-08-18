@@ -52,7 +52,7 @@
         attribution: 'Your attribution here'
       }).addTo(map);
 
-      var layerGroup = L.layerGroup([title]);  // Create a layer group
+      var layerGroup = L.layerGroup(populationprotest);  // Create a layer group
       layerGroup.addTo(map);
 
       var response = $.ajax({
@@ -82,7 +82,7 @@
             onEachFeature: function (feature, layer) {
               layer.bindPopup("<b>Deaths: " + feature.properties.DEATHS + "</b>");
             }
-          }).addTo(layerGroup);  // Add to the layer group
+          }).addTo(populationprotest);  // Add to the layer group
         },
         error: function (xhr) {
           alert(xhr.statusText);

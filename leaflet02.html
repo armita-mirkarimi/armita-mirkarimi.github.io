@@ -30,7 +30,7 @@
         layers: [OpenStreetMap_HOT]
       });
 
-      // Load and add the GeoJSON layer using AJAX
+      // Load and add the first GeoJSON layer using AJAX
       fetch("NH_Community_Center_Areas.geojson")
         .then(response => response.json())
         .then(data => {
@@ -45,6 +45,23 @@
         })
         .catch(error => {
           console.error("Error loading GeoJSON data:", error);
+        });
+
+      // Load and add the new GeoJSON layer using AJAX
+      fetch("NH_Designated_Rivers_24K.geojson.geojson")
+        .then(response => response.json())
+        .then(data => {
+          L.geoJson(data, {
+            color: "blue",
+            weight: 2,
+            opacity: 0.7,
+            onEachFeature: function(feature, layer) {
+              layer.bindPopup("<b>Name: " + feature.properties.Class + "</b>");
+            }
+          }).addTo(map);
+        })
+        .catch(error => {
+          console.error("Error loading new GeoJSON data:", error);
         });
     }
   </script>

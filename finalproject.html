@@ -1,18 +1,69 @@
 <!DOCTYPE html>
 <html>
 <head>
-  
-  <title>Voter Registration in California's Midterm Elections</title>
-  <link rel="stylesheet" href="style05.css">
+  <title>Hello Campus!</title>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+    crossorigin=""></script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+    crossorigin=""/>
+  <style>
+    #map { height: 400px; width: 700px; }
+    html, body { height: 100%; margin: 0; padding: 0; }
+  </style>
+</head>
 
-</head>  
- <body>
-    
-    <h1 style="color: #FF6600;">Voter Registration in California's Midterm Elections</h1>
-    <h2 style="color: #FF6600;">Why this project?</h2>
-    <h2 style="color: #FF6600;">The political backdrop</h2>
-    <h1 style="color: #FF6600;">Let's look at some maps!</h1>
-    <h1 style="color: #FF6600;">What do they all these stats mean?</h1>
+<body onload="initialize()">
+  <h1>Mapping Iran's Contemporary Protests</h1>
+  <div id="map"></div>
+  <script>
+    var OpenStreetMap_HOT = L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, Tiles courtesy of <a href="http://hot.osm.org">HOT OSM</a>'
+    });
 
-</body>  
+    function initialize() {
+      var map = L.map('map', {
+        center: [43.7034, -72.2887],
+        zoom: 15,
+        layers: [OpenStreetMap_HOT]
+      });
+
+      // first GeoJSON layer 
+      fetch("iran-with-regions_1457.geojson")
+        .then(response => response.json())
+        .then(data => {
+          L.geoJson(data, {
+            color: "red",
+            weight: 3,
+            opacity: 0.5,
+            onEachFeature: function(feature, layer) {
+              layer.bindPopup("<b>ACRES: " + feature.properties.ACRES + "</b>");
+            }
+          }).addTo(map);
+        })
+        .catch(error => {
+          console.error("Error loading GeoJSON data:", error);
+        });
+
+      // new GeoJSON layer
+      fetch("NH_Designated_Rivers_24K.geojson")
+        .then(response => response.json())
+        .then(data => {
+          L.geoJson(data, {
+            color: "blue",
+            weight: 2,
+            opacity: 0.7,
+            onEachFeature: function(feature, layer) {
+              layer.bindPopup("<b>Name: " + feature.properties.Class + "</b>");
+            }
+          }).addTo(map);
+        })
+        .catch(error => {
+          console.error("Error loading new GeoJSON data:", error);
+        });
+    }
+  </script>
+</body>
 </html>

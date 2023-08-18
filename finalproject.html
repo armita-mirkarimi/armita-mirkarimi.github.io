@@ -96,7 +96,7 @@
       }).addTo(map);
 
       // Create population layer 
-      var populationprotest = L.layerGroup().addTo(map);
+      var population = L.layerGroup().addTo(map);
 
       var response = $.ajax({
         url: "Iran_Population.geojson",
@@ -115,7 +115,16 @@
           alert(xhr.statusText);
         }
       });
+
+       var all = $.when(response);
+
+      all.done(function () {
+        // Additional logic can be added here if needed
+      });
+      
   </script>
+
+  <!--This is a second map-->
  
   <div id="map1"></div>
 

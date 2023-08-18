@@ -56,7 +56,7 @@
       layerGroup.addTo(map);
 
       var response = $.ajax({
-        url: "https://armita-mirkarimi.github.io/Iran_Population.geojson",
+        url: "Iran_Population.geojson",
         dataType: "json",
         success: function (data) {
           var populationLayer = L.geoJson(data, {
@@ -74,7 +74,7 @@
       });
 
       var response1 = $.ajax({
-        url: "https://armita-mirkarimi.github.io/Protest_data.geojson",
+        url: "Protest_data.geojson",
         dataType: "json",
         success: function (data) {
           var protestLayer = L.geoJson(data, {

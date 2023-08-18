@@ -1,117 +1,98 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Mapping Iran's Contemporary Protests</title>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <link
-      rel="stylesheet"
-      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
-      crossorigin=""
-    />
-    <script
-      src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
-      crossorigin=""
-    ></script>
+<head>
+  <title>Mapping Iran's Contemporary Protests</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+    crossorigin=""
+  />
+  <script
+    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+    crossorigin=""
+  ></script>
+  
+  <style>
+    #map {
+      height: 400px;
+      width: 700px;
+    }
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+  </style>
+</head>
+<body>
+  <h1>Mapping Iran's Contemporary Protests</h1>
+  <div id="map"></div>
 
-    <style>
-      #map {
-        height: 400px;
-        width: 700px;
-      }
-      html,
-      body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-      }
-    </style>
+  <script>
+    $(document).ready(function () {
+      var map = L.map("map").setView([32.4279, 53.6880], 4);
 
-    <script>
-      // Define symbology function outside the .done function
+      var title = L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        maxZoom: 19,
+      }).addTo(map);
+
+      var layerGroup = L.layerGroup([title]);  // Create a layer group
+      layerGroup.addTo(map);
+
+      var response = $.ajax({
+        url: "https://armita-mirkarimi.github.io/Iran_Population.geojson",
+        dataType: "json",
+        success: function (data) {
+          var populationLayer = L.geoJson(data, {
+            color: "#002800",
+            weight: 3,
+            opacity: 0.5,
+            onEachFeature: function (feature, layer) {
+              layer.bindPopup("<b>Population: " + feature.properties.POPULATION + "</b><br/><b>Name: " + feature.properties.NAME_ + "</b>");
+            }
+          }).addTo(layerGroup);  // Add to the layer group
+        },
+        error: function (xhr) {
+          alert(xhr.statusText);
+        }
+      });
+
+      var response1 = $.ajax({
+        url: "https://armita-mirkarimi.github.io/Protest_data.geojson",
+        dataType: "json",
+        success: function (data) {
+          var protestLayer = L.geoJson(data, {
+            style: symbology,
+            onEachFeature: function (feature, layer) {
+              layer.bindPopup("<b>Name: " + feature.properties.NAME + "</b><br/><b>DEATHS: " + feature.properties.DEATHS_ + "</b>");
+            }
+          }).addTo(layerGroup);  // Add to the layer group
+        },
+        error: function (xhr) {
+          alert(xhr.statusText);
+        }
+      });
+
+      var all = $.when(response, response1);
+
       function symbology(feature) {
         var population = feature.properties.POPULATION;
         var lineColor = "red";
 
         return {
-          color: lineColor,
+          color: "red",
           weight: 3,
           opacity: 0.5
         };
       }
 
-      $(document).ready(function () {
-        var map = L.map("map").setView([32.4279, 53.6880], 4);
-        var layerGroup = new L.LayerGroup();
-
-        var title = L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
-          maxZoom: 19,
-          attribution:
-            '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, Tiles courtesy of <a href="http://www.openstreetmap.org/" target="_blank">OpenStreetMap</a>',
-        });
-        layerGroup.addLayer(title);
-        layerGroup.addTo(map);
-
-        var response = $.ajax({
-          url: "https://armita-mirkarimi.github.io/Iran_Population.geojson",
-          dataType: "json",
-          success: function (data) {
-            console.log("It worked!", data);
-          },
-          error: function (xhr) {
-            alert(xhr.statusText);
-          },
-        });
-
-        var response1 = $.ajax({
-          url: "https://armita-mirkarimi.github.io/Protest_data.geojson",
-          dataType: "json",
-          success: function (data) {
-            console.log("It worked again!", data);
-          },
-          error: function (xhr) {
-            alert(xhr.statusText);
-          },
-        });
-
-        var all = $.when(response, response1);
-
-        all.done(function () {
-          var population = L.geoJson(response.responseJSON, {
-            color: "#002800",
-            weight: 3,
-            opacity: 0.5,
-            onEachFeature: function (feature, layer) {
-              layer.bindPopup(
-                "<b>Population: " +
-                  feature.properties.POPULATION +
-                  "</b><br/><b>Name: " +
-                  feature.properties.NAME_ +
-                  "</b>"
-              );
-            },
-          });
-
-          var protest = L.geoJson(response1.responseJSON, {
-            style: symbology,
-            onEachFeature: function (feature, layer) {
-              layer.bindPopup(
-                "<b>Name: " +
-                  feature.properties.NAME +
-                  "</b><br/><b>DEATHS: " +
-                  feature.properties.DEATHS_ +
-                  "</b>"
-              );
-            },
-          });
-        });
+      all.done(function () {
+        // You can add any additional logic here if needed
       });
-    </script>
-  </head>
-
-  <body>
-    <h1>Mapping Iran's Contemporary Protests</h1>
-    <div id="map"></div>
-  </body>
+    });
+  </script>
+</body>
 </html>

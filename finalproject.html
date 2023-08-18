@@ -29,6 +29,18 @@
     </style>
 
     <script>
+      // Define symbology function outside the .done function
+      function symbology(feature) {
+        var population = feature.properties.POPULATION;
+        var lineColor = "red";
+
+        return {
+          color: lineColor,
+          weight: 3,
+          opacity: 0.5
+        };
+      }
+
       $(document).ready(function () {
         var map = L.map("map").setView([32.4279, 53.6880], 4);
         var layerGroup = new L.LayerGroup();
@@ -66,43 +78,40 @@
         var all = $.when(response, response1);
 
         all.done(function () {
-            var population = L.geoJson(response.responseJSON, 
-                    { color: "#002800",
-                      weight: 3,
-                      opacity: .5,
-                      onEachFeature: function(feature, layer) {
-                        layer.bindPopup("<b>Population: " + feature.properties.POPULATION + "</b><br/><b>Name: " + feature.properties.NAME_ + "</b>");
-                      }
-                    }); 
-
-
-            var protest = L.geoJson(response1.responseJSON, 
-                            { style: symbology,
-                            onEachFeature: function(feature, layer) {
-                               layer.bindPopup("<b>Name: " + feature.properties.NAME + "</b><br/><b>DEATHS: " + feature.properties.DEATHS_ + "</b>");
-                                }
-                           });
-            
-        function symbology(feature) {
-          var population = feature.properties.POPULATION;
-          var lineColor = "red";
-
-          return {
-            color: lineColor,
+          var population = L.geoJson(response.responseJSON, {
+            color: "#002800",
             weight: 3,
-            opacity: .5
-          };
-          
-        }        });
+            opacity: 0.5,
+            onEachFeature: function (feature, layer) {
+              layer.bindPopup(
+                "<b>Population: " +
+                  feature.properties.POPULATION +
+                  "</b><br/><b>Name: " +
+                  feature.properties.NAME_ +
+                  "</b>"
+              );
+            },
+          });
 
-                layerGroup.addLayer(population); 
-
+          var protest = L.geoJson(response1.responseJSON, {
+            style: symbology,
+            onEachFeature: function (feature, layer) {
+              layer.bindPopup(
+                "<b>Name: " +
+                  feature.properties.NAME +
+                  "</b><br/><b>DEATHS: " +
+                  feature.properties.DEATHS_ +
+                  "</b>"
+              );
+            },
+          });
+        });
       });
     </script>
   </head>
 
   <body>
-  <h1>Mapping Iran's Contemporary Protests</h1>
+    <h1>Mapping Iran's Contemporary Protests</h1>
     <div id="map"></div>
   </body>
 </html>

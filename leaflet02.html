@@ -30,7 +30,7 @@
         layers: [OpenStreetMap_HOT]
       });
 
-      // Load and add the first GeoJSON layer using AJAX
+      // first GeoJSON layer 
       fetch("NH_Community_Center_Areas.geojson")
         .then(response => response.json())
         .then(data => {
@@ -47,8 +47,8 @@
           console.error("Error loading GeoJSON data:", error);
         });
 
-      // Load and add the new GeoJSON layer using AJAX
-      fetch("NH_Designated_Rivers_24K.geojson.geojson")
+      // new GeoJSON layer
+      fetch("NH_Designated_Rivers_24K.geojson")
         .then(response => response.json())
         .then(data => {
           L.geoJson(data, {

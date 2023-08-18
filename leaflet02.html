@@ -30,7 +30,7 @@
         layers: [OpenStreetMap_HOT]
       });
 
-      // first GeoJSON layer 
+      // community center layer 
       fetch("NH_Community_Center_Areas.geojson")
         .then(response => response.json())
         .then(data => {
@@ -47,7 +47,7 @@
           console.error("Error loading GeoJSON data:", error);
         });
 
-      // new GeoJSON layer
+      // river layer
       fetch("NH_Designated_Rivers_24K.geojson")
         .then(response => response.json())
         .then(data => {
@@ -56,7 +56,7 @@
             weight: 2,
             opacity: 0.7,
             onEachFeature: function(feature, layer) {
-              layer.bindPopup("<b>Name: " + feature.properties.Class + "</b>");
+              layer.bindPopup("<b>Class: " + feature.properties.Class + "</b>");
             }
           }).addTo(map);
         })

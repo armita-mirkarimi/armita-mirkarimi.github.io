@@ -66,8 +66,34 @@
         var all = $.when(response, response1);
 
         all.done(function () {
-          // Your code here
-        });
+            var population = L.geoJson(response.responseJSON, 
+                    { color: "#002800",
+                      weight: 3,
+                      opacity: .5,
+                      onEachFeature: function(feature, layer) {
+                        layer.bindPopup("<b>Population: " + feature.properties.POPULATION + "</b><br/><b>Name: " + feature.properties.NAME_ + "</b>");
+                      }
+                    }); 
+
+
+            var protest = L.geoJson(response1.responseJSON, 
+                            { style: symbology,
+                            onEachFeature: function(feature, layer) {
+                               layer.bindPopup("<b>Name: " + feature.properties.NAME + "</b><br/><b>DEATHS: " + feature.properties.DEATHS_ + "</b>");
+                                }
+                           });
+            
+        function symbology(feature) {
+          var population = feature.properties.POPULATION;
+          var lineColor = "red";
+
+          return {
+            color: lineColor,
+            weight: 3,
+            opacity: .5
+          };
+          
+        }        });
       });
     </script>
   </head>

@@ -71,126 +71,114 @@
     >Let's start with understanding the population landscape of Iran before diving into the geographies of every protest   
   </h1>
 
-    <!-- This is my first map -->
+ <!-- This is my first map -->
+<div id="map"></div>
 
-  <div id="map"></div>
+<script>
+  // Define symbology function once
+  function symbology(feature) {
+    var population = feature.properties.POPULATION;
+    var lineColor = "red";
 
-  <script>
-    function symbology(feature) {
-      var population = feature.properties.POPULATION;
-      var lineColor = "red";
+    return {
+      color: lineColor,
+      weight: 3,
+      opacity: 0.5
+    };
+  }
 
-      return {
-        color: lineColor,
-        weight: 3,
-        opacity: 0.5
-      };
-    }
+  $(document).ready(function () {
+    var map = L.map("map").setView([32.4279, 53.6880], 4);
 
-    $(document).ready(function () {
-      var map = L.map("map").setView([32.4279, 53.6880], 4);
+    var tile = L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      maxZoom: 19,
+      attribution: 'Your attribution here'
+    }).addTo(map);
 
-      var tile = L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
-        maxZoom: 19,
-        attribution: 'Your attribution here'
-      }).addTo(map);
+    // Create population layer 
+    var population = L.layerGroup().addTo(map);
 
-      // Create population layer 
-      var population = L.layerGroup().addTo(map);
-
-      var response = $.ajax({
-        url: "Iran_Population.geojson",
-        dataType: "json",
-        success: function (data) {
-          var population = L.geoJson(data, {
-            color: "#002800",
-            weight: 3,
-            opacity: 0.5,
-            onEachFeature: function (feature, layer) {
-              layer.bindPopup("<b>Population: " + feature.properties.POPULATION + "</b>");
-            }
-          }).addTo(map); 
-        },
-        error: function (xhr) {
-          alert(xhr.statusText);
-        }
-      });
-
-       var all = $.when(response);
-
-      all.done(function () {
-      });
-      
-  </script>
-
-  <!--This is a second map-->
- 
-  <div id="map1"></div>
-
-  <script>
-    // Define symbology function outside the .done function
-    function symbology(feature) {
-      var population = feature.properties.POPULATION;
-      var lineColor = "red";
-
-      return {
-        color: lineColor,
-        weight: 3,
-        opacity: 0.5
-      };
-    }
-
-    $(document).ready(function () {
-      var map = L.map("map").setView([32.4279, 53.6880], 4);
-
-      var title = L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
-        maxZoom: 19,
-        attribution: 'Your attribution here'
-      }).addTo(map);
-
-      // Create a layer group for population and protest data
-      var populationprotest = L.layerGroup().addTo(map);
-
-      var response = $.ajax({
-        url: "Iran_Population.geojson",
-        dataType: "json",
-        success: function (data) {
-          var populationLayer = L.geoJson(data, {
-            color: "#002800",
-            weight: 3,
-            opacity: 0.5,
-            onEachFeature: function (feature, layer) {
-              layer.bindPopup("<b>Population: " + feature.properties.POPULATION + "</b>");
-            }
-          }).addTo(populationprotest);  // Add to the layer group
-        },
-        error: function (xhr) {
-          alert(xhr.statusText);
-        }
-      });
-
-      var response1 = $.ajax({
-        url: "Protest_data.geojson",
-        dataType: "json",
-        success: function (data) {
-          var protestLayer = L.geoJson(data, {
-            style: symbology,
-            onEachFeature: function (feature, layer) {
-              layer.bindPopup("<b>Deaths: " + feature.properties.DEATHS + "</b>");
-            }
-          }).addTo(populationprotest);  // Add to the layer group
-        },
-        error: function (xhr) {
-          alert(xhr.statusText);
-        }
-      });
-
-      var all = $.when(response, response1);
-
-      all.done(function () {
-        // Additional logic can be added here if needed
-      });
+    var response = $.ajax({
+      url: "Iran_Population.geojson",
+      dataType: "json",
+      success: function (data) {
+        var populationLayer = L.geoJson(data, {
+          color: "#002800",
+          weight: 3,
+          opacity: 0.5,
+          onEachFeature: function (feature, layer) {
+            layer.bindPopup("<b>Population: " + feature.properties.POPULATION + "</b>");
+          }
+        }).addTo(population); 
+      },
+      error: function (xhr) {
+        alert(xhr.statusText);
+      }
     });
-  </script>
+
+    var all = $.when(response);
+
+    all.done(function () {
+      // Additional logic can be added here if needed
+    });
+  });
+</script>
+
+<!-- This is my second map -->
+<div id="map1"></div>
+
+<script>
+  $(document).ready(function () {
+    var map1 = L.map("map1").setView([32.4279, 53.6880], 4);
+
+    var tile1 = L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      maxZoom: 19,
+      attribution: 'Your attribution here'
+    }).addTo(map1);
+
+    // Create a layer group for population and protest data
+    var populationprotest = L.layerGroup().addTo(map1);
+
+    var response = $.ajax({
+      url: "Iran_Population.geojson",
+      dataType: "json",
+      success: function (data) {
+        var populationLayer = L.geoJson(data, {
+          color: "#002800",
+          weight: 3,
+          opacity: 0.5,
+          onEachFeature: function (feature, layer) {
+            layer.bindPopup("<b>Population: " + feature.properties.POPULATION + "</b>");
+          }
+        }).addTo(populationprotest); 
+      },
+      error: function (xhr) {
+        alert(xhr.statusText);
+      }
+    });
+
+    var response1 = $.ajax({
+      url: "Protest_data.geojson",
+      dataType: "json",
+      success: function (data) {
+        var protestLayer = L.geoJson(data, {
+          style: symbology,
+          onEachFeature: function (feature, layer) {
+            layer.bindPopup("<b>Deaths: " + feature.properties.DEATHS + "</b>");
+          }
+        }).addTo(populationprotest); 
+      },
+      error: function (xhr) {
+        alert(xhr.statusText);
+      }
+    });
+
+    var all = $.when(response, response1);
+
+    all.done(function () {
+      // Additional logic can be added here if needed
+    });
+  });
+</script>
 </body>
 </html>

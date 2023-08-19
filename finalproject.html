@@ -298,16 +298,15 @@ Let's overlay the maps together!
     // Your code when both requests are completed
   });
 
-// Add a click event handler for the button
-$("#toggleButton").click(function () {
-  // Toggle the visibility of the layers
-  if (map2.hasLayer(populationLayer2)) {
-    map2.addLayer(protestLayer2);
-  } else {
-    map2.addLayer(populationLayer2);
-    map2.removeLayer(protestLayer2);
-  }
-});
+  // Add a click event handler for the button
+  $("#toggleButton").click(function () {
+    // Toggle the visibility of the protest layer
+    if (map2.hasLayer(protestLayer2)) {
+      map2.removeLayer(protestLayer2);
+    } else {
+      map2.addLayer(protestLayer2);
+    }
+  });
 });
 </script>
 

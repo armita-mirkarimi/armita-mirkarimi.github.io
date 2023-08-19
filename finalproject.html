@@ -18,7 +18,7 @@
   <style>
     .map-container {
       height: 800px; 
-      width: 300px 
+      width: 300px; /* Add a semicolon here */
       margin-bottom: 50px; 
     }
     html, body {
@@ -111,7 +111,7 @@
             weight: 3,
             opacity: 0.5,
             onEachFeature: function (feature, layer) {
-              layer.bindPopup; ("<b>Population: " + feature.properties.POPULATION + "</b>")
+              layer.bindPopup("<b>Population: " + feature.properties.POPULATION + "</b>")
             }
           }).addTo(population); 
         },
@@ -276,7 +276,7 @@ Let's overlay the maps together!
       }
     });
 
-    // third layer group
+    // Create a separate layer group for the third map
     var protestLayer2 = L.layerGroup().addTo(map2);
 
     var response3 = $.ajax({
@@ -301,19 +301,11 @@ Let's overlay the maps together!
       // Your code when both requests are completed
     });
 
-layerGroup.addLayer(eG2005); 
-        
-
-       $("#button").show(); 
-       $("#button").click( function () {
-           
-            {
-              layerGroup.removeLayer(Protest_data2.geojson);
-              layerGroup.addLayer(Protest_data2);
-              
-            } 
-              
-    
+    // Add your button click event here
+    $("#button").show(); 
+    $("#button").click(function () {
+      // Handle the button click action here
+    });
   });
 </script>
 

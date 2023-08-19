@@ -16,11 +16,10 @@
   ></script>
   
   <style>
-    /* Style for the map containers */
     .map-container {
-      height: 800px; /* Adjust the height as needed */
-      width: 500px /* Use 100% width to make the maps responsive */
-      margin-bottom: 50px; /* Add spacing between maps */
+      height: 800px; 
+      width: 500px 
+      margin-bottom: 50px; 
     }
     html, body {
       height: 100%;
@@ -114,13 +113,15 @@
       var all = $.when(response);
 
       all.done(function () {
-        // Additional logic can be added here if needed
       });
     });
   </script>
 
 
-  <h1>
+  <h1 style="color: #FFFFFF;
+            background: #B30000;
+            color: #FFFFFF;
+            background: #B30000;">
 
 Protest Data
     
@@ -142,7 +143,7 @@ Protest Data
       var protest = L.layerGroup().addTo(map1);
 
       var response1 = $.ajax({
-        url: "Protest_data.geojson",
+        url: "Protest_data2.geojson",
         dataType: "json",
         success: function (data) {
           var protestLayer = L.geoJson(data, {
@@ -160,7 +161,6 @@ Protest Data
       var all = $.when(response1);
 
       all.done(function () {
-        // Additional logic can be added here if needed
       });
     });
   </script>

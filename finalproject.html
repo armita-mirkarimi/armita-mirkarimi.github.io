@@ -111,7 +111,7 @@
             weight: 3,
             opacity: 0.5,
             onEachFeature: function (feature, layer) {
-              layer.bindPopup("<b>Population: " + feature.properties.population + "</b>")
+              layer.bindPopup("<b>Population: " + feature.properties.POPULATION + "</b>")
             }
           }).addTo(population); 
         },
@@ -159,7 +159,7 @@ Let's now examine the protests regionally.
           var protestLayer = L.geoJson(data, {
             style: symbology,
             onEachFeature: function (feature, layer) {
-              layer.bindPopup("<b>Deaths: " + feature.properties.deaths + "</b>");
+              layer.bindPopup("<b>Deaths: " + feature.properties.DEATHS + "</b>");
             }
           }).addTo(protest); 
         },

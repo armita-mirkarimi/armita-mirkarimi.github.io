@@ -90,7 +90,7 @@
     $(document).ready(function () {
       var map = L.map("map").setView([32.4279, 53.6880], 4);
 
-      var title = L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      var tile = L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
         maxZoom: 19,
         attribution: 'Your attribution here'
       }).addTo(map);
@@ -109,7 +109,7 @@
             onEachFeature: function (feature, layer) {
               layer.bindPopup("<b>Population: " + feature.properties.POPULATION + "</b>");
             }
-          }).addTo(map);  // Add to the layer group
+          }).addTo(map); 
         },
         error: function (xhr) {
           alert(xhr.statusText);
@@ -119,7 +119,6 @@
        var all = $.when(response);
 
       all.done(function () {
-        // Additional logic can be added here if needed
       });
       
   </script>

@@ -274,10 +274,16 @@ Let's overlay the maps together!
       });
 
       // Add your button click event here
-      $("#button").show(); 
-      $("#button").click(function () {
+      $("#toggleButton").show(); 
+      $("#toggleButton").click(function () {
+        toggleMaps();
       });
     });
+
+    // Function to toggle the visibility of the maps
+    function toggleMaps() {
+      $(".map-container").toggle();
+    }
   </script>
 
 </body>

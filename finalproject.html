@@ -17,8 +17,8 @@
   
   <style>
     .map-container {
-      height: 800px; 
-      width: 500px;
+      height: 700px; 
+      width: 600px;
       margin-bottom: 50px; 
     }
     html, body {
@@ -303,6 +303,30 @@ Let's overlay the maps together!
     // Add your button click event here
     $("#button").show(); 
     $("#button").click(function () {
+      <!-- Add a button with the id "toggleButton" -->
+<button id="toggleButton">Toggle Maps</button>
+
+<script>
+  $(document).ready(function () {
+    // Track whether the maps are currently displayed
+    var mapsVisible = true;
+
+    // Function to toggle the visibility of the maps
+    function toggleMaps() {
+      if (mapsVisible) {
+        // Hide the maps
+        $(".map-container").hide();
+        mapsVisible = false;
+      } else {
+        // Show the maps
+        $(".map-container").show();
+        mapsVisible = true;
+      }
+    }
+
+    // Attach the toggleMaps function to the button's click event
+    $("#toggleButton").click(toggleMaps);
+
     });
   });
 </script>

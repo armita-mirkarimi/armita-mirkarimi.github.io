@@ -241,14 +241,14 @@ Let's overlay the maps together!
     
   </h2>
 
-   <!-- This is both of my maps together --> 
-
-  <div class="map-container" id="map2"></div>
+<!-- This is my third map with both layers with a button -->
+<div class="map-container" id="map2">
+  <button id="toggleButton">Toggle Layer</button>
+</div>
 
 <script>
-
   $(document).ready(function () {
-    // Create the third map and its layer
+    // Create the third map and its layers
     var map2 = L.map("map2").setView([32.4279, 53.6880], 5);
 
     var tile2 = L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
@@ -269,7 +269,7 @@ Let's overlay the maps together!
           onEachFeature: function (feature, layer) {
             layer.bindPopup("<b>Population: " + feature.properties.POPULATION + "</b>");
           }
-        }).addTo(populationLayer2); 
+        }).addTo(populationLayer2);
       },
       error: function (xhr) {
         alert(xhr.statusText);
@@ -288,7 +288,7 @@ Let's overlay the maps together!
           onEachFeature: function (feature, layer) {
             layer.bindPopup("<b>Deaths: " + feature.properties.DEATHS + "</b>");
           }
-        }).addTo(protestLayer2); 
+        }).addTo(protestLayer2);
       },
       error: function (xhr) {
         alert(xhr.statusText);
@@ -301,10 +301,17 @@ Let's overlay the maps together!
       // Your code when both requests are completed
     });
 
-    // Add your button click event here
-    $("#button").show(); 
-    $("#button").click(function () {
+    // Add a click event handler for the button
+    $("#toggleButton").click(function () {
       // Handle the button click action here
+      // For example, you can toggle the visibility of layers
+      if (map2.hasLayer(populationLayer2)) {
+        map2.removeLayer(populationLayer2);
+        map2.removeLayer(protestLayer2);
+      } else {
+        populationLayer2.addTo(map2);
+        protestLayer2.addTo(map2);
+      }
     });
   });
 </script>

@@ -244,21 +244,54 @@ Let's overlay the maps together!
    <!-- This is both of my maps together --> 
 
   <div class="map-container" id="map2"></div>
+  <button id="toggleButton">Toggle Map</button>
 
 <script>
-
   $(document).ready(function () {
-    // Create the third map and its layer
-    var map2 = L.map("map2").setView([32.4279, 53.6880], 5);
+    // Function to create map and layers
+    function createMap(containerId, geojsonData) {
+      var map = L.map(containerId).setView([32.4279, 53.6880], 5);
 
-    var tile2 = L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        maxZoom: 19,
+        attribution: 'Courtesy of Humanitarian Data Exchange'
+      }).addTo(map);
+
+      var layerGroup = L.layerGroup().addTo(map);
+
+      L.geoJson(geojsonData, {
+        style: function (feature) {
+          return {
+            color: "#002800",
+            weight: 3,
+            opacity: 0.5
+          };
+        },
+        onEachFeature: function (feature, layer) {
+          if (containerId === "map") {
+            layer.bindPopup("<b>Population: " + feature.properties.POPULATION + "</b>");
+          } else {
+            layer.bindPopup("<b>Deaths: " + feature.properties.DEATHS + "</b>");
+          }
+        }
+      }).addTo(layerGroup);
+    }
+
+    // Create the first and second maps
+    createMap("map", "Iran_Population.geojson");
+    createMap("map1", "Protest_data2.geojson");
+
+    // Create the third map and its layers
+    var map2 = L.map("map2").setView([32.4279, 53.6880], 5);
+    L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
       maxZoom: 19,
       attribution: 'Courtesy of Humanitarian Data Exchange'
     }).addTo(map2);
 
     var populationLayer2 = L.layerGroup().addTo(map2);
+    var protestLayer2 = L.layerGroup().addTo(map2);
 
-    var response2 = $.ajax({
+    $.ajax({
       url: "Iran_Population.geojson",
       dataType: "json",
       success: function (data) {
@@ -269,42 +302,44 @@ Let's overlay the maps together!
           onEachFeature: function (feature, layer) {
             layer.bindPopup("<b>Population: " + feature.properties.POPULATION + "</b>");
           }
-        }).addTo(populationLayer2); 
+        }).addTo(populationLayer2);
       },
       error: function (xhr) {
         alert(xhr.statusText);
       }
     });
 
-    // Create a separate layer group for the third map
-    var protestLayer2 = L.layerGroup().addTo(map2);
-
-    var response3 = $.ajax({
+    $.ajax({
       url: "Protest_data2.geojson",
       dataType: "json",
       success: function (data) {
         L.geoJson(data, {
-          style: symbology, // Use the existing symbology function
+          style: function (feature) {
+            return {
+              color: "red",
+              weight: 3,
+              opacity: 0.5
+            };
+          },
           onEachFeature: function (feature, layer) {
             layer.bindPopup("<b>Deaths: " + feature.properties.DEATHS + "</b>");
           }
-        }).addTo(protestLayer2); 
+        }).addTo(protestLayer2);
       },
       error: function (xhr) {
         alert(xhr.statusText);
       }
     });
 
-    var all = $.when(response2, response3);
-
-    all.done(function () {
-      // Your code when both requests are completed
-    });
-
-    // Add your button click event here
-    $("#button").show(); 
-    $("#button").click(function () {
-      // Handle the button click action here
+    // Toggle button click event
+    $("#toggleButton").click(function () {
+      if (map2.hasLayer(populationLayer2)) {
+        map2.removeLayer(populationLayer2);
+        map2.removeLayer(protestLayer2);
+      } else {
+        populationLayer2.addTo(map2);
+        protestLayer2.addTo(map2);
+      }
     });
   });
 </script>

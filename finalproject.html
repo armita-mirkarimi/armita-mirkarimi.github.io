@@ -18,7 +18,7 @@
   <style>
     .map-container {
       height: 800px; 
-      width: 500px;
+      width: 500px; /* Add a semicolon here */
       margin-bottom: 50px; 
     }
     html, body {
@@ -79,9 +79,6 @@
   <!-- This is my first map -->
   <div class="map-container" id="map"></div>
 
-  <!-- "Toggle Maps" button -->
-  <button id="toggleButton">Toggle Maps</button>
-
   <script>
     function symbology(feature) {
       var population = feature.properties.POPULATION;
@@ -128,15 +125,8 @@
       all.done(function () {
       });
     });
-
-    // Function to toggle the visibility of the maps
-    function toggleMaps() {
-      $(".map-container").toggle();
-    }
-
-    // Attach the toggleMaps function to the button's click event
-    $("#toggleButton").click(toggleMaps);
   </script>
+
 
   <h1 style="color: #FFFFFF;
             background: #B30000;
@@ -150,7 +140,42 @@ Let's now examine the protests regionally.
   <!-- This is my second map -->
   <div class="map-container" id="map1"></div>
 
-  <h2 style="color: #FFFFFF;
+  <script>
+    $(document).ready(function () {
+      var map1 = L.map("map1").setView([32.4279, 53.6880], 5);
+
+      var tile1 = L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        maxZoom: 19,
+        attribution: 'Courtesy of Humanitarian Data Exchange'
+      }).addTo(map1);
+
+      // Create a layer group for the second map
+      var protest = L.layerGroup().addTo(map1);
+
+      var response1 = $.ajax({
+        url: "Protest_data2.geojson",
+        dataType: "json",
+        success: function (data) {
+          var protestLayer = L.geoJson(data, {
+            style: symbology,
+            onEachFeature: function (feature, layer) {
+              layer.bindPopup("<b>Deaths: " + feature.properties.DEATHS + "</b>");
+            }
+          }).addTo(protest); 
+        },
+        error: function (xhr) {
+          alert(xhr.statusText);
+        }
+      });
+
+      var all = $.when(response1);
+
+      all.done(function () {
+      });
+    });
+  </script>
+
+ <h2 style="color: #FFFFFF;
             background: #B30000;
             color: #FFFFFF;
             background: #B30000;">
@@ -173,7 +198,7 @@ What do these points all mean?
     <tr>
         <td>The 1999 Student Protests</td>
         <td>4</td>
-        <td>14,000</td>
+        <td>1,4000</td>
         <td>10,000</td>
     </tr>
     
@@ -204,7 +229,8 @@ What do these points all mean?
       <td>30</td>
       <td>4,000</td>
     </tr>
-  </table>
+
+     </table>
 
   <h2 style="color: #FFFFFF;
             background: #B30000;
@@ -219,72 +245,69 @@ Let's overlay the maps together!
 
   <div class="map-container" id="map2"></div>
 
-  <script>
-    $(document).ready(function () {
-      // Create the third map and its layer
-      var map2 = L.map("map2").setView([32.4279, 53.6880], 5);
+<script>
 
-      var tile2 = L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
-        maxZoom: 19,
-        attribution: 'Courtesy of Humanitarian Data Exchange'
-      }).addTo(map2);
+  $(document).ready(function () {
+    // Create the third map and its layer
+    var map2 = L.map("map2").setView([32.4279, 53.6880], 5);
 
-      var populationLayer2 = L.layerGroup().addTo(map2);
+    var tile2 = L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      maxZoom: 19,
+      attribution: 'Courtesy of Humanitarian Data Exchange'
+    }).addTo(map2);
 
-      var response2 = $.ajax({
-        url: "Iran_Population.geojson",
-        dataType: "json",
-        success: function (data) {
-          L.geoJson(data, {
-            color: "#002800",
-            weight: 3,
-            opacity: 0.5,
-            onEachFeature: function (feature, layer) {
-              layer.bindPopup("<b>Population: " + feature.properties.POPULATION + "</b>");
-            }
-          }).addTo(populationLayer2); 
-        },
-        error: function (xhr) {
-          alert(xhr.statusText);
-        }
-      });
+    var populationLayer2 = L.layerGroup().addTo(map2);
 
-      // Create a separate layer group for the third map
-      var protestLayer2 = L.layerGroup().addTo(map2);
-
-      var response3 = $.ajax({
-        url: "Protest_data2.geojson",
-        dataType: "json",
-        success: function (data) {
-          L.geoJson(data, {
-            style: symbology, // Use the existing symbology function
-            onEachFeature: function (feature, layer) {
-              layer.bindPopup("<b>Deaths: " + feature.properties.DEATHS + "</b>");
-            }
-          }).addTo(protestLayer2); 
-        },
-        error: function (xhr) {
-          alert(xhr.statusText);
-        }
-      });
-
-      var all = $.when(response2, response3);
-
-      all.done(function () {
-      });
-
-      // Add your button click event here
-      $("#toggleButton").show(); 
-      $("#toggleButton").click(function () {
-        toggleMaps();
-      });
+    var response2 = $.ajax({
+      url: "Iran_Population.geojson",
+      dataType: "json",
+      success: function (data) {
+        L.geoJson(data, {
+          color: "#002800",
+          weight: 3,
+          opacity: 0.5,
+          onEachFeature: function (feature, layer) {
+            layer.bindPopup("<b>Population: " + feature.properties.POPULATION + "</b>");
+          }
+        }).addTo(populationLayer2); 
+      },
+      error: function (xhr) {
+        alert(xhr.statusText);
+      }
     });
 
-    // Function to toggle the visibility of the maps
-    function toggleMaps() {
-      $(".map-container").toggle();
-    }
-  </script>
+    // Create a separate layer group for the third map
+    var protestLayer2 = L.layerGroup().addTo(map2);
+
+    var response3 = $.ajax({
+      url: "Protest_data2.geojson",
+      dataType: "json",
+      success: function (data) {
+        L.geoJson(data, {
+          style: symbology, // Use the existing symbology function
+          onEachFeature: function (feature, layer) {
+            layer.bindPopup("<b>Deaths: " + feature.properties.DEATHS + "</b>");
+          }
+        }).addTo(protestLayer2); 
+      },
+      error: function (xhr) {
+        alert(xhr.statusText);
+      }
+    });
+
+    var all = $.when(response2, response3);
+
+    all.done(function () {
+      // Your code when both requests are completed
+    });
+
+    // Add your button click event here
+    $("#button").show(); 
+    $("#button").click(function () {
+      // Handle the button click action here
+    });
+  });
+</script>
 
 </body>
 </html>

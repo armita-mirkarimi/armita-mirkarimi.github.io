@@ -72,10 +72,10 @@
   </h1>
 
  <!-- This is my first map -->
-<div id="map"></div>
+
+  <div id="map"></div>
 
 <script>
-  // Define symbology function once
   function symbology(feature) {
     var population = feature.properties.POPULATION;
     var lineColor = "red";
@@ -92,7 +92,7 @@
 
     var tile = L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
       maxZoom: 19,
-      attribution: 'Your attribution here'
+      attribution: 'Courtesy of Humanitarian Data Exchange'
     }).addTo(map);
 
     // Create population layer 
@@ -102,7 +102,7 @@
       url: "Iran_Population.geojson",
       dataType: "json",
       success: function (data) {
-        var populationLayer = L.geoJson(data, {
+        var population = L.geoJson(data, {
           color: "#002800",
           weight: 3,
           opacity: 0.5,
@@ -137,13 +137,13 @@
     }).addTo(map1);
 
     // Create a layer group for population and protest data
-    var populationprotest = L.layerGroup().addTo(map1);
+    var protest = L.layerGroup().addTo(map1);
 
     var response = $.ajax({
       url: "Iran_Population.geojson",
       dataType: "json",
       success: function (data) {
-        var populationLayer = L.geoJson(data, {
+        var population = L.geoJson(data, {
           color: "#002800",
           weight: 3,
           opacity: 0.5,
@@ -173,10 +173,9 @@
       }
     });
 
-    var all = $.when(response, response1);
+    var all = $.when(response1);
 
     all.done(function () {
-      // Additional logic can be added here if needed
     });
   });
 </script>

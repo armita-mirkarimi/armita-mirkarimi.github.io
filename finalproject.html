@@ -79,10 +79,103 @@
   <!-- This is my first map -->
   <div class="map-container" id="map"></div>
 
+  <script>
+    function symbology(feature) {
+      var population = feature.properties.POPULATION;
+      var lineColor = "red";
+
+      return {
+        color: lineColor,
+        weight: 3,
+        opacity: 0.5
+      };
+    }
+
+    $(document).ready(function () {
+      var map = L.map("map").setView([32.4279, 53.6880], 5);
+
+      var tile = L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        maxZoom: 19,
+        attribution: 'Courtesy of Humanitarian Data Exchange'
+      }).addTo(map);
+
+      // Create population layer 
+      var population = L.layerGroup().addTo(map);
+
+      var response = $.ajax({
+        url: "Iran_Population.geojson",
+        dataType: "json",
+        success: function (data) {
+          var populationLayer = L.geoJson(data, {
+            color: "#002800",
+            weight: 3,
+            opacity: 0.5,
+            onEachFeature: function (feature, layer) {
+              layer.bindPopup("<b>Population: " + feature.properties.POPULATION + "</b>")
+            }
+          }).addTo(population); 
+        },
+        error: function (xhr) {
+          alert(xhr.statusText);
+        }
+      });
+
+      var all = $.when(response);
+
+      all.done(function () {
+      });
+    });
+  </script>
+
+
+  <h1 style="color: #FFFFFF;
+            background: #B30000;
+            color: #FFFFFF;
+            background: #B30000;">
+
+Let's now examine the protests regionally.
+    
+  </h1>
+
   <!-- This is my second map -->
   <div class="map-container" id="map1"></div>
 
-  <h2 style="color: #FFFFFF;
+  <script>
+    $(document).ready(function () {
+      var map1 = L.map("map1").setView([32.4279, 53.6880], 5);
+
+      var tile1 = L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        maxZoom: 19,
+        attribution: 'Courtesy of Humanitarian Data Exchange'
+      }).addTo(map1);
+
+      // Create a layer group for the second map
+      var protest = L.layerGroup().addTo(map1);
+
+      var response1 = $.ajax({
+        url: "Protest_data2.geojson",
+        dataType: "json",
+        success: function (data) {
+          var protestLayer = L.geoJson(data, {
+            style: symbology,
+            onEachFeature: function (feature, layer) {
+              layer.bindPopup("<b>Deaths: " + feature.properties.DEATHS + "</b>");
+            }
+          }).addTo(protest); 
+        },
+        error: function (xhr) {
+          alert(xhr.statusText);
+        }
+      });
+
+      var all = $.when(response1);
+
+      all.done(function () {
+      });
+    });
+  </script>
+
+ <h2 style="color: #FFFFFF;
             background: #B30000;
             color: #FFFFFF;
             background: #B30000;">
@@ -94,6 +187,7 @@ What do these points all mean?
   <table>
     <tr>
         <th style="font-size: 22px; color: #B30000;" colspan="4">Contemporary Protests in a Snapshot</th>
+  
     </tr>
     <tr>
         <th style="font-size: 18px;">Protest Name</th>
@@ -104,7 +198,7 @@ What do these points all mean?
     <tr>
         <td>The 1999 Student Protests</td>
         <td>4</td>
-        <td>14,000</td>
+        <td>1,4000</td>
         <td>10,000</td>
     </tr>
     
@@ -135,7 +229,8 @@ What do these points all mean?
       <td>30</td>
       <td>4,000</td>
     </tr>
-  </table>
+
+     </table>
 
   <h2 style="color: #FFFFFF;
             background: #B30000;
@@ -146,71 +241,70 @@ Let's overlay the maps together!
     
   </h2>
 
-  <!-- This is both of my maps together --> 
+   <!-- This is both of my maps together --> 
 
   <div class="map-container" id="map2"></div>
-  <button id="toggleButton">Toggle Map</button>
 
 <script>
+
   $(document).ready(function () {
-    // Function to create the third map and its layers
-    function createThirdMap(containerId, geojsonData) {
-      var map = L.map(containerId).setView([32.4279, 53.6880], 5);
+    // Create the third map and its layer
+    var map2 = L.map("map2").setView([32.4279, 53.6880], 5);
 
-      L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
-        maxZoom: 19,
-        attribution: 'Courtesy of Humanitarian Data Exchange'
-      }).addTo(map);
+    var tile2 = L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      maxZoom: 19,
+      attribution: 'Courtesy of Humanitarian Data Exchange'
+    }).addTo(map2);
 
-      var populationLayer = L.layerGroup().addTo(map);
-      var protestLayer = L.layerGroup().addTo(map);
+    var populationLayer2 = L.layerGroup().addTo(map2);
 
-      $.ajax({
-        url: geojsonData,
-        dataType: "json",
-        success: function (data) {
-          L.geoJson(data, {
-            style: function (feature) {
-              return {
-                color: containerId === "map2" ? "#002800" : "red",
-                weight: 3,
-                opacity: 0.5
-              };
-            },
-            onEachFeature: function (feature, layer) {
-              if (containerId === "map2") {
-                layer.bindPopup("<b>Population: " + feature.properties.POPULATION + "</b>");
-              } else {
-                layer.bindPopup("<b>Deaths: " + feature.properties.DEATHS + "</b>");
-              }
-            }
-          }).addTo(containerId === "map2" ? populationLayer : protestLayer);
-        },
-        error: function (xhr) {
-          alert(xhr.statusText);
-        }
-      });
-    }
-
-    // Create the first and second maps
-    createThirdMap("map", "Iran_Population.geojson");
-    createThirdMap("map1", "Protest_data2.geojson");
-    
-    // Toggle button click event
-    $("#toggleButton").click(function () {
-      var map2 = L.map("map2").setView([32.4279, 53.6880], 5);
-      L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
-        maxZoom: 19,
-        attribution: 'Courtesy of Humanitarian Data Exchange'
-      }).addTo(map2);
-
-      if (map2.hasLayer(populationLayer)) {
-        map2.removeLayer(populationLayer);
-        map2.removeLayer(protestLayer);
-      } else {
-        populationLayer.addTo(map2);
-        protestLayer.addTo(map2);
+    var response2 = $.ajax({
+      url: "Iran_Population.geojson",
+      dataType: "json",
+      success: function (data) {
+        L.geoJson(data, {
+          color: "#002800",
+          weight: 3,
+          opacity: 0.5,
+          onEachFeature: function (feature, layer) {
+            layer.bindPopup("<b>Population: " + feature.properties.POPULATION + "</b>");
+          }
+        }).addTo(populationLayer2); 
+      },
+      error: function (xhr) {
+        alert(xhr.statusText);
       }
+    });
+
+    // Create a separate layer group for the third map
+    var protestLayer2 = L.layerGroup().addTo(map2);
+
+    var response3 = $.ajax({
+      url: "Protest_data2.geojson",
+      dataType: "json",
+      success: function (data) {
+        L.geoJson(data, {
+          style: symbology, // Use the existing symbology function
+          onEachFeature: function (feature, layer) {
+            layer.bindPopup("<b>Deaths: " + feature.properties.DEATHS + "</b>");
+          }
+        }).addTo(protestLayer2); 
+      },
+      error: function (xhr) {
+        alert(xhr.statusText);
+      }
+    });
+
+    var all = $.when(response2, response3);
+
+    all.done(function () {
+      // Your code when both requests are completed
+    });
+
+    // Add your button click event here
+    $("#button").show(); 
+    $("#button").click(function () {
+      // Handle the button click action here
     });
   });
 </script>

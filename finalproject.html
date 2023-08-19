@@ -300,6 +300,20 @@ Let's overlay the maps together!
     all.done(function () {
       // Your code when both requests are completed
     });
+
+layerGroup.addLayer(eG2005); 
+        
+
+       $("#button").show(); 
+       $("#button").click( function () {
+           
+            {
+              layerGroup.removeLayer(Protest_data2.geojson);
+              layerGroup.addLayer(Protest_data2);
+              
+            } 
+              
+    
   });
 </script>
 

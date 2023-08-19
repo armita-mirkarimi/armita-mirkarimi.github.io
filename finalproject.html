@@ -234,32 +234,24 @@ What do these points all mean?
 
   <!-- This is both of my maps together --> 
 
-   <div class="map-container" id="map2"></div>
+   <!-- This is both of my maps together --> 
+<div class="map-container" id="map2"></div>
 
-  <script>
-  function symbology(feature) {
-    var population = feature.properties.POPULATION;
-    var lineColor = "red";
-
-    return {
-      color: lineColor,
-      weight: 3,
-      opacity: 0.5
-    };
-  }
+<script>
+  // Do not redefine the symbology function here
 
   $(document).ready(function () {
-    // Create the first map and its layer
-    var map = L.map("map").setView([32.4279, 53.6880], 5);
+    // Create the third map and its layer
+    var map2 = L.map("map2").setView([32.4279, 53.6880], 5);
 
-    var tile = L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    var tile2 = L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
       maxZoom: 19,
       attribution: 'Courtesy of Humanitarian Data Exchange'
-    }).addTo(map);
+    }).addTo(map2);
 
-    var populationLayer = L.layerGroup().addTo(map);
+    var populationLayer2 = L.layerGroup().addTo(map2);
 
-    var response = $.ajax({
+    var response2 = $.ajax({
       url: "Iran_Population.geojson",
       dataType: "json",
       success: function (data) {
@@ -270,40 +262,33 @@ What do these points all mean?
           onEachFeature: function (feature, layer) {
             layer.bindPopup("<b>Population: " + feature.properties.POPULATION + "</b>");
           }
-        }).addTo(populationLayer); 
+        }).addTo(populationLayer2); 
       },
       error: function (xhr) {
         alert(xhr.statusText);
       }
     });
 
-    // Create the second map and its layer
-    var map1 = L.map("map1").setView([32.4279, 53.6880], 5);
+    // Create a separate layer group for the third map
+    var protestLayer2 = L.layerGroup().addTo(map2);
 
-    var tile1 = L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
-      maxZoom: 19,
-      attribution: 'Courtesy of Humanitarian Data Exchange'
-    }).addTo(map1);
-
-    var protestLayer = L.layerGroup().addTo(map1);
-
-    var response1 = $.ajax({
+    var response3 = $.ajax({
       url: "Protest_data2.geojson",
       dataType: "json",
       success: function (data) {
         L.geoJson(data, {
-          style: symbology,
+          style: symbology, // Use the existing symbology function
           onEachFeature: function (feature, layer) {
             layer.bindPopup("<b>Deaths: " + feature.properties.DEATHS + "</b>");
           }
-        }).addTo(protestLayer); 
+        }).addTo(protestLayer2); 
       },
       error: function (xhr) {
         alert(xhr.statusText);
       }
     });
 
-    var all = $.when(response, response1);
+    var all = $.when(response2, response3);
 
     all.done(function () {
       // Your code when both requests are completed

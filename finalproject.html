@@ -249,34 +249,35 @@ What do these points all mean?
   }
 
   $(document).ready(function () {
-    var map = L.map("map2").setView([32.4279, 53.6880], 5);
+    // Create the first map and its layer
+    var map = L.map("map").setView([32.4279, 53.6880], 5);
 
     var tile = L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
       maxZoom: 19,
       attribution: 'Courtesy of Humanitarian Data Exchange'
     }).addTo(map);
 
-    // Create population layer 
-    var population = L.layerGroup().addTo(map);
+    var populationLayer = L.layerGroup().addTo(map);
 
     var response = $.ajax({
       url: "Iran_Population.geojson",
       dataType: "json",
       success: function (data) {
-        var populationLayer = L.geoJson(data, {
+        L.geoJson(data, {
           color: "#002800",
           weight: 3,
           opacity: 0.5,
           onEachFeature: function (feature, layer) {
             layer.bindPopup("<b>Population: " + feature.properties.POPULATION + "</b>");
           }
-        }).addTo(population); 
+        }).addTo(populationLayer); 
       },
       error: function (xhr) {
         alert(xhr.statusText);
       }
     });
 
+    // Create the second map and its layer
     var map1 = L.map("map1").setView([32.4279, 53.6880], 5);
 
     var tile1 = L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
@@ -284,19 +285,18 @@ What do these points all mean?
       attribution: 'Courtesy of Humanitarian Data Exchange'
     }).addTo(map1);
 
-    // Create a layer group for the second map
-    var protest = L.layerGroup().addTo(map2);
+    var protestLayer = L.layerGroup().addTo(map1);
 
     var response1 = $.ajax({
       url: "Protest_data2.geojson",
       dataType: "json",
       success: function (data) {
-        var protestLayer = L.geoJson(data, {
+        L.geoJson(data, {
           style: symbology,
           onEachFeature: function (feature, layer) {
             layer.bindPopup("<b>Deaths: " + feature.properties.DEATHS + "</b>");
           }
-        }).addTo(protest); 
+        }).addTo(protestLayer); 
       },
       error: function (xhr) {
         alert(xhr.statusText);

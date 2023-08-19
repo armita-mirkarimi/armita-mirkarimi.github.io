@@ -232,13 +232,20 @@ What do these points all mean?
 
      </table>
 
-  <!-- This is both of my maps together --> 
+  <h2 style="color: #FFFFFF;
+            background: #B30000;
+            color: #FFFFFF;
+            background: #B30000;">
+
+Let's overlay the maps together! 
+    
+  </h2>
 
    <!-- This is both of my maps together --> 
-<div class="map-container" id="map2"></div>
+
+  <div class="map-container" id="map2"></div>
 
 <script>
-  // Do not redefine the symbology function here
 
   $(document).ready(function () {
     // Create the third map and its layer
@@ -269,7 +276,7 @@ What do these points all mean?
       }
     });
 
-    // Create a separate layer group for the third map
+    // third layer group
     var protestLayer2 = L.layerGroup().addTo(map2);
 
     var response3 = $.ajax({

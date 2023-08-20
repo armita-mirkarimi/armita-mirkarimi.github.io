@@ -161,7 +161,7 @@ Let's now examine the protests regionally.
           var protestLayer = L.geoJson(data, {
             style: symbology,
             onEachFeature: function (feature, layer) {
-              layer.bindPopup("<b>Deaths: " + feature.properties.Deaths + "</b>");
+              layer.bindPopup("<b>Deaths: " + feature.properties.Deaths + "</b><br/><b>Detained: " + feature.properties.Detained</b><br/><b>Participants: " + feature.properties.Participants</b><br/><b>Name: " + feature.properties.Name + "</b>");
             }
           }).addTo(protest); 
         },
@@ -285,7 +285,7 @@ Let's overlay the maps together!
       L.geoJson(data, {
         style: symbology, // Use the existing symbology function
         onEachFeature: function (feature, layer) {
-          layer.bindPopup("<b>Deaths: " + feature.properties.Deaths + "</b>");
+          layer.bindPopup("<b>Deaths: " + feature.properties.Deaths + "</b><br/><b>Detained: " + feature.properties.Detained</b><br/><b>Participants: " + feature.properties.Participants</b><br/><b>Name: " + feature.properties.Name + "</b>");
         }
       }).addTo(protestLayer2);
     },

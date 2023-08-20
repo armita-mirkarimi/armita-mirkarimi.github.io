@@ -76,7 +76,10 @@
   bottom: 10px; 
   left: 10px; 
 }
-
+.header-background {
+  background: #B30000;
+  color: #FFFFFF;
+}
   </style>
 </head>
   
@@ -308,16 +311,17 @@
   </tr>
 </table>
 
-   <div style="background: #B30000; color: #FFFFFF;">
-    <div class="centered-content">
-      <h2>Let's look at the population and protest data together</h2>
-    </div>
-
-  <!-- This is my third map with both layers and a styled button -->
-  <div id="map-container">
-    <div id="map2"></div>
-    <button id="toggleButton" style="position: absolute; bottom: 10px; left: 10px; background-color: #4DA6FF; color: white; padding: 10px; border: none; cursor: pointer;">Click to see protest data</button>
+   <div class="header-background">
+  <div class="centered-content">
+    <h2>Let's look at the population and protest data together</h2>
   </div>
+</div>
+
+<!-- This is my third map with both layers and a styled button -->
+<div id="map-container">
+  <div id="map2"></div>
+  <button id="toggleButton" style="position: absolute; bottom: 10px; left: 10px; background-color: #4DA6FF; color: white; padding: 10px; border: none; cursor: pointer;">Click to see protest data</button>
+</div>
 
   <script>
     $(document).ready(function () {

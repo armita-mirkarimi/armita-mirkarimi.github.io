@@ -80,7 +80,7 @@
     
   </h2>
 
-  <!-- This is my second title --> 
+  <!-- This is my first section: population --> 
   <div style="background: #B30000; color: #FFFFFF;">
     <div class="centered-content">
       <h1>Let's start with the population of Iran</h1>
@@ -94,7 +94,7 @@
 
   <br></br>
 
-  <!-- This is my first map -->
+  <!-- This is my first map: population -->
   <div class="map-container" id="map"></div>
 
   <script>
@@ -129,7 +129,7 @@
             weight: 3,
             opacity: 0.5,
             onEachFeature: function (feature, layer) {
-              layer.bindPopup("<b>Population: " + feature.properties.Population + "</b>")
+              layer.bindPopup("<b>Population: " + feature.properties.Population + "</b><b>name: " + feature.properties.name" </b>")
             }
           }).addTo(population); 
         },

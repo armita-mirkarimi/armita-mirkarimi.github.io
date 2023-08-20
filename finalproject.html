@@ -82,7 +82,7 @@
 
   <script>
     function symbology(feature) {
-      var population = feature.properties.POPULATION;
+      var population = feature.properties.Population;
       var lineColor = "red";
 
       return {
@@ -112,7 +112,7 @@
             weight: 3,
             opacity: 0.5,
             onEachFeature: function (feature, layer) {
-              layer.bindPopup("<b>Population: " + feature.properties.POPULATION + "</b>")
+              layer.bindPopup("<b>Population: " + feature.properties.Population + "</b>")
             }
           }).addTo(population); 
         },
@@ -160,11 +160,11 @@ Let's now examine the protests regionally.
           var protestLayer = L.geoJson(data, {
             style: symbology,
             onEachFeature: function (feature, layer) {
-              layer.bindPopup("<b>Deaths: " + feature.properties.DEATHS + "</b>");
+              layer.bindPopup("<b>Deaths: " + feature.properties.Deaths + "</b>");
             }
           }).addTo(protest); 
         },
-        error: function (xhr) {
+        error: function (xhr) {got i
           alert(xhr.statusText);
         }
       });
@@ -268,7 +268,7 @@ Let's overlay the maps together!
         weight: 3,
         opacity: 0.5,
         onEachFeature: function (feature, layer) {
-          layer.bindPopup("<b>Population: " + feature.properties.POPULATION + "</b>");
+          layer.bindPopup("<b>Population: " + feature.properties.Population + "</b>");
         }
       }).addTo(populationLayer2);
     },
@@ -284,7 +284,7 @@ Let's overlay the maps together!
       L.geoJson(data, {
         style: symbology, // Use the existing symbology function
         onEachFeature: function (feature, layer) {
-          layer.bindPopup("<b>Deaths: " + feature.properties.DEATHS + "</b>");
+          layer.bindPopup("<b>Deaths: " + feature.properties.Deaths + "</b>");
         }
       }).addTo(protestLayer2);
     },

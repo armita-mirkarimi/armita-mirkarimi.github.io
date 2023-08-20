@@ -57,6 +57,23 @@
     height: auto; 
     }
 
+    #map-container {
+  position: relative;
+  width: 100%;
+  height: 600px; /* Set the desired height for your map */
+}
+
+#map2 {
+  width: 100%;
+  height: 100%;
+}
+
+#toggleButton {
+  position: absolute;
+  bottom: 10px; /* Adjust the distance from the bottom as needed */
+  left: 10px; /* Adjust the distance from the left as needed */
+}
+
   </style>
 </head>
   
@@ -322,10 +339,10 @@
   </div>
 
   <!-- This is my third map with both layers and a styled button -->
-  <div class="map-container" id="map2">
-    <button id="toggleButton" style="position: absolute; top: 10px; left: 10px; z-index: 1000;">Click to see protest data</button>
-  </div>
-
+  <div id="map-container">
+  <div id="map2"></div>
+  <button id="toggleButton">Click to see protest data</button></div>
+  
   <script>
     $(document).ready(function () {
       // Create the third map and its layers
@@ -376,7 +393,6 @@
       var all = $.when(response2, response3);
 
       all.done(function () {
-        // Your code when both requests are completed
       });
 
       // Add a click event handler for the button

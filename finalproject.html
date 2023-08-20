@@ -46,6 +46,15 @@
       color: #FFFFFF; 
       font-size: 18px;
     }
+    .header-with-image {
+    clear: both; /* Ensure the header doesn't wrap around the floated image */
+    }
+
+    .header-image {
+    float: right; /* Float the image to the right */
+    margin-left: 10px; /* Add some margin to separate the image from text */
+    }
+
   </style>
 </head>
   
@@ -250,11 +259,11 @@
   </div>
 
   <h2>
-    <img src="1999.jpg"> The 1999 Student Protests 
+    <img src="1999.jpg" class="header-image"> The 1999 Student Protests 
   </h2>
 
   <p>
-    If I could sum up this protest in three words, it would be <strong>students, newspaper, and reformist efforts</strong>.
+    If I could summarize this protest in three words, it would be <strong>students, newspaper, and reformist efforts</strong>.
     To protest the closure of a reformist newspaper called "Salaam," many students at Tehran University. The protests 
     started peacefully but quickly turned violent when police set dormitories with students in them on fire. What is
     important to garner from the tragic events of this protest is understanding a) the location and b) the flashpoint. The
@@ -262,7 +271,7 @@
   </p>
 
   <h2>
-    <img src="2009.jpg">The 2009 Green Movement 
+    <img src="2009.jpg" class="header-image">The 2009 Green Movement 
   </h2>
 
   <p>
@@ -275,7 +284,7 @@
   </p>
 
   <h2>
-    <img src="2017.png">The 2017-18 Economic Price Hikes
+    <img src="2017.png" class="header-image">The 2017-18 Economic Price Hikes
   </h2>
 
   <p>
@@ -286,7 +295,7 @@
   </p>
 
    <h2>
-    <img src="2019.jpg">The 2019 Price Hike Protests
+    <img src="2019.jpg" class="header-image">The 2019 Price Hike Protests
   </h2>
 
   <p>
@@ -296,7 +305,7 @@
   </p>
 
   <h2>
-    <img src="2020.jpg">The 2020 January Protests
+    <img src="2020.jpg" class="header-image">The 2020 January Protests
   </h2>
 
   <p>
@@ -306,7 +315,7 @@
 
   <div style="background: #B30000; color: #FFFFFF;">
     <div class="centered-content">
-      <h2>Let's overlay the maps together!</h2>
+      <h2>Let's look at both the population and protest data together</h2>
     </div>
   </div>
 

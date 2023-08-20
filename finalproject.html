@@ -60,22 +60,30 @@
     margin-bottom: 30px;
     }
 
-    #map-container {
-  position: relative;
-  width: 800px;
-  height: 700px;
+   #map-container {
+    position: relative;
+    width: 800px;
+    height: 700px;
+    margin: 0 auto; /* Center the map horizontally */
 }
 
 #map2 {
-  width: 800px;
-  height: 700px;
+    width: 100%; /* Adjust to take full width of the container */
+    height: 100%; /* Adjust to take full height of the container */
 }
 
 #toggleButton {
-  position: absolute;
-  bottom: 10px; 
-  left: 10px; 
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    background-color: #4DA6FF;
+    color: white;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    z-index: 1000;
 }
+
 .header-background {
   background: #B30000;
   color: #FFFFFF;
@@ -329,10 +337,12 @@
 
   <br></br>
 
-<!-- This is my third map with both layers and a styled button -->
-<div id="map-container">
-    <div id="map2"></div>
-    <button id="toggleButton" style="position: absolute; bottom: 10px; left: 10px; background-color: #4DA6FF; color: white; padding: 10px; border: none; cursor: pointer; z-index: 1000;">Click to see protest data</button>
+<!-- This is your third map with both layers and a styled button -->
+<div class="centered-content">
+    <div id="map-container">
+        <div id="map2"></div>
+        <button id="toggleButton" style="background-color: #4DA6FF; color: white; padding: 10px; border: none; cursor: pointer; z-index: 1000;">Click to see protest data</button>
+    </div>
 </div>
 
 <script>

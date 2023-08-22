@@ -139,56 +139,71 @@
 
   <br></br>
 
-  <!-- This is my first map: population -->
-  <div class="map-container" id="map"></div>
+ <!-- This is my first map: population -->
+<div class="map-container" id="map"></div>
 
-  <script>
-    function symbology(feature) {
-      var population = feature.properties.Population;
-      var lineColor = "red";
+<script>
+  // Define a color scale using Chroma.js
+  var colorScale = chroma.scale(['#f7fbff', '#08306b']).domain([0, 10000000]); // Adjust the domain as needed
 
-      return {
-        color: lineColor,
-        weight: 3,
-        opacity: 0.5
-      };
-    }
+  function symbology(feature) {
+    var population = feature.properties.Population;
+    var fillColor = colorScale(population);
 
-    $(document).ready(function () {
-      var map = L.map("map").setView([32.4279, 53.6880], 5);
+    return {
+      fillColor: fillColor,
+      color: "#002800",
+      weight: 3,
+      opacity: 0.5,
+      fillOpacity: 0.7 // Adjust the opacity as needed
+    };
+  }
 
-      var tile = L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
-        maxZoom: 19,
-        attribution: 'Courtesy of Humanitarian Data Exchange'
-      }).addTo(map);
+  $(document).ready(function () {
+    var map = L.map("map").setView([32.4279, 53.6880], 5);
 
-      // Create population layer 
-      var population = L.layerGroup().addTo(map);
+    var tile = L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      maxZoom: 19,
+      attribution: 'Courtesy of Humanitarian Data Exchange'
+    }).addTo(map);
 
-      var response = $.ajax({
-        url: "Iran_Population.geojson",
-        dataType: "json",
-        success: function (data) {
-          var populationLayer = L.geoJson(data, {
-            color: "#002800",
-            weight: 3,
-            opacity: 0.5,
-            onEachFeature: function (feature, layer) {
-                  layer.bindPopup("<b>Population:</b> " + feature.properties.Population + "<br><b>name:</b> " + feature.properties.name);
-            }
-          }).addTo(population); 
-        },
-        error: function (xhr) {
-          alert(xhr.statusText);
-        }
-      });
+    // Create a population layer 
+    var population = L.layerGroup().addTo(map);
 
-      var all = $.when(response);
-
-      all.done(function () {
-      });
+    var response = $.ajax({
+      url: "Iran_Population.geojson",
+      dataType: "json",
+      success: function (data) {
+        var populationLayer = L.geoJson(data, {
+          style: symbology, // Use the symbology function
+          onEachFeature: function (feature, layer) {
+            layer.bindPopup("<b>Population:</b> " + feature.properties.Population + "<br><b>Name:</b> " + feature.properties.name);
+          }
+        }).addTo(population); 
+      },
+      error: function (xhr) {
+        alert(xhr.statusText);
+      }
     });
-  </script>
+
+    var all = $.when(response);
+
+    all.done(function () {
+      // Add a legend for the population color scale
+      var legend = L.control({ position: 'bottomleft' });
+
+      legend.onAdd = function (map) {
+        var div = L.DomUtil.create('div', 'population-legend');
+        div.innerHTML = '<div><span>Population</span><span>' + colorScale.domain()[0] + '</span></div>' +
+                        '<div><span></span><span>' + colorScale.domain()[1] + '</span></div>';
+        return div;
+      };
+
+      legend.addTo(map);
+    });
+  });
+</script>
+
 
  <h2>What are the key takeaways here?</h2>
 <ul>

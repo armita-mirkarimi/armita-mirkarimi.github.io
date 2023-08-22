@@ -101,6 +101,23 @@
               console.log("Layer added to map.");
             }
           });
+
+          // Add the river layer
+          fetch("NH_Designated_Rivers_24K.geojson")
+            .then(response => response.json())
+            .then(data => {
+              L.geoJson(data, {
+                color: "blue",
+                weight: 2,
+                opacity: 0.7,
+                onEachFeature: function(feature, layer) {
+                  layer.bindPopup("<b>Class: " + feature.properties.Class + "</b>");
+                }
+              }).addTo(map);
+            })
+            .catch(error => {
+              console.error("Error loading new GeoJSON data:", error);
+            });
         });
       }
 

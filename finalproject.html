@@ -172,7 +172,7 @@
             weight: 3,
             opacity: 0.5,
             onEachFeature: function (feature, layer) {
-                  layer.bindPopup("<b>Population: " + feature.properties.Population + "</b> <b>name: " + feature.properties.name + "</b>");
+                  layer.bindPopup("<b>Population:</b> " + feature.properties.Population + "<br><b>name:</b> " + feature.properties.name);
             }
           }).addTo(population); 
         },
@@ -367,7 +367,7 @@
                     weight: 3,
                     opacity: 0.5,
                     onEachFeature: function (feature, layer) {
-                        layer.bindPopup("<b>Population: " + feature.properties.Population + "</b> <b>name: " + feature.properties.name + "</b>");
+                        layer.bindPopup("<b>Population:</b> " + feature.properties.Population + "<br><b>name:</b> " + feature.properties.name);
                     }
                 }).addTo(populationLayer2);
             },

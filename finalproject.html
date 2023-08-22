@@ -6,6 +6,7 @@
   <title>Mapping Iran's Contemporary Protests</title>
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/chroma-js/2.1.1/chroma.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   
   <!--This is my stylesheet!-->
@@ -140,69 +141,70 @@
   <br></br>
 
  <!-- This is my first map: population -->
-<div class="map-container" id="map"></div>
+  <div class="map-container" id="map"></div>
   
 <script>
-  // Define a color scale using Chroma.js
-  var colorScale = chroma.scale(['#f7fbff', '#08306b']).domain([0, 10000000]); // Adjust the domain as needed
+  // color scale using Chroma.js
+    
+  var colorScale = chroma.scale(['#f7fbff', '#08306b']).domain([0, 10000000]); 
 
-  function symbology(feature) {
-    var population = feature.properties.Population;
-    var fillColor = colorScale(population);
+    function symbology(feature) {
+      var population = feature.properties.Population;
+      var fillColor = colorScale(population);
 
-    return {
-      fillColor: fillColor,
-      color: "#002800",
-      weight: 3,
-      opacity: 0.5,
-      fillOpacity: 0.7 // Adjust the opacity as needed
-    };
-  }
-
-  $(document).ready(function () {
-    var map = L.map("map").setView([32.4279, 53.6880], 5);
-
-    var tile = L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
-      maxZoom: 19,
-      attribution: 'Courtesy of Humanitarian Data Exchange'
-    }).addTo(map);
-
-    // Create a population layer 
-    var population = L.layerGroup().addTo(map);
-
-    var response = $.ajax({
-      url: "Iran_Population.geojson",
-      dataType: "json",
-      success: function (data) {
-        var populationLayer = L.geoJson(data, {
-          style: symbology, // Use the symbology function
-          onEachFeature: function (feature, layer) {
-            layer.bindPopup("<b>Population:</b> " + feature.properties.Population + "<br><b>Name:</b> " + feature.properties.name);
-          }
-        }).addTo(population); 
-      },
-      error: function (xhr) {
-        alert(xhr.statusText);
-      }
-    });
-
-    var all = $.when(response);
-
-    all.done(function () {
-      // Add a legend for the population color scale
-      var legend = L.control({ position: 'bottomleft' });
-
-      legend.onAdd = function (map) {
-        var div = L.DomUtil.create('div', 'population-legend');
-        div.innerHTML = '<div><span>Population</span><span>' + colorScale.domain()[0] + '</span></div>' +
-                        '<div><span></span><span>' + colorScale.domain()[1] + '</span></div>';
-        return div;
+      return {
+        fillColor: fillColor,
+        color: "#002800",
+        weight: 3,
+        opacity: 0.5,
+        fillOpacity: 0.7 // Adjust the opacity as needed
       };
+    }
 
-      legend.addTo(map);
+ $(document).ready(function () {
+      var map = L.map("map").setView([32.4279, 53.6880], 5);
+
+      var tile = L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        maxZoom: 19,
+        attribution: 'Courtesy of Humanitarian Data Exchange'
+      }).addTo(map);
+
+      // Create a population layer 
+      var population = L.layerGroup().addTo(map);
+
+      var response = $.ajax({
+        url: "Iran_Population.geojson",
+        dataType: "json",
+        success: function (data) {
+          var populationLayer = L.geoJson(data, {
+            style: symbology, // Use the symbology function
+            onEachFeature: function (feature, layer) {
+              layer.bindPopup("<b>Population:</b> " + feature.properties.Population + "<br><b>Name:</b> " + feature.properties.name);
+            }
+          }).addTo(population); 
+        },
+        error: function (xhr) {
+          alert(xhr.statusText);
+        }
+      });
+
+      var all = $.when(response);
+
+      all.done(function () {
+        // Add a legend for the population color scale
+        var legend = L.control({ position: 'bottomleft' });
+
+        legend.onAdd = function (map) {
+          var div = L.DomUtil.create('div', 'population-legend');
+          div.innerHTML = '<div><span>Population</span><span>' + colorScale.domain()[0] + '</span></div>' +
+                          '<div><span></span><span>' + colorScale.domain()[1] + '</span></div>';
+          return div;
+        };
+
+        legend.addTo(map);
+      });
     });
-  });
-</script>
+  </script>
 
 
  <h2>What are the key takeaways here?</h2>
@@ -407,7 +409,7 @@
             dataType: "json",
             success: function (data) {
                 L.geoJson(data, {
-                    style: symbology, // Use the existing symbology function
+                    style: symbology, 
                     onEachFeature: function (feature, layer) {
                         layer.bindPopup("<b>Deaths: " + feature.properties.Deaths + "</b><br/><b>Detained: " + feature.properties.Detained + "</b><br/><b>Participants: " + feature.properties.Participants + "</b><br/><b>Name: " + feature.properties.Name + "</b>");
                     }

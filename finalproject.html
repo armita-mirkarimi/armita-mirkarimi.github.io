@@ -354,7 +354,7 @@
 
   <br></br>
 
-<!-- This is your third map with both layers and a styled button -->
+<!-- This is my third map with both layers and a styled button -->
 <div class="centered-content">
     <div id="map-container">
         <div id="map2"></div>
@@ -380,9 +380,18 @@
             dataType: "json",
             success: function (data) {
                 L.geoJson(data, {
-                    color: "#002800",
-                    weight: 3,
-                    opacity: 0.5,
+                    style: function (feature) {
+                        var population = feature.properties.Population;
+                        var fillColor = colorScale(population); // Use the color scale defined earlier
+
+                        return {
+                            fillColor: fillColor,
+                            color: "#002800",
+                            weight: 3,
+                            opacity: 0.5,
+                            fillOpacity: 0.7
+                        };
+                    },
                     onEachFeature: function (feature, layer) {
                         layer.bindPopup("<b>Population:</b> " + feature.properties.Population + "<br><b>name:</b> " + feature.properties.name);
                     }

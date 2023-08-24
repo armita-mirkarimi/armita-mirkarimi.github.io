@@ -3,20 +3,29 @@
 <head>
     <title>Hello from Taylor</title>
     <style>
+        .centered-image {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .centered-image h1 {
+            color: #FFFFFF;
+            background: #F7C1C1;
+            text-shadow: 4px 3px 0px #7A7A7A;
+            margin: 0; /* To remove default margin around <h1> */
+        }
+
         .centered-image img {
-            width: 50%; 
+            width: 50%;
         }
     </style>
 </head>
 <body>
     <div class="centered-image">
-        <h1 style="color: #FFFFFF;
-              background: #F7C1C1;
-              text-shadow: 4px 3px 0px #7A7A7A;
-              color: #FFFFFF;
-              background: #F7C1C1;">
-            <img src="taylor.jpg">
-        </h1>
+        <h1>A Message from Taylor</h1>
+        <img src="taylor.jpg" alt="Taylor's Image">
         <h2 style="color: #d41244;">Hi guys! Thank you so much for listening to my music. I am so grateful to you!
             As a token of my appreciation, I wanted to give you free floor tickets to my tour.
         </h2>
@@ -24,6 +33,6 @@
     </div>
     
     <!-- Add the link here -->
-    <a href="https://open.spotify.com/track/3hUxzQpSfdDqwM3ZTFQY0K?si=784b0b9efb524c7e" style="color: #d41244;">Listen to August on Spotify</a>
+    <a href="https://open.spotify.com/track/3hUxzQpSfdDqwM3ZTFQY0K?si=784b0b9efb524c7e" style="color: #d41244;">Listen on Spotify</a>
 </body>
 </html>

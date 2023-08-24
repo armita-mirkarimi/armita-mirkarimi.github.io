@@ -1,11 +1,13 @@
-<!DOCTYPE html> 
-<html>   
- <title>Hello from Taylor.</title> 
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hello from Taylor</title>
+</head>
 <body>
-<h1>A Message from Taylor<h1>
-<h2>Hi guys! Thank you so much for listening to my music. I am so grateful to you!
-As a token of my appreciation, I wanted to give you free floor tickets to my tour. 
-</h2>
-<h1>See you there!</h1>
+    <h1>A Message from Taylor</h1>
+    <h2>Hi guys! Thank you so much for listening to my music. I am so grateful to you!
+        As a token of my appreciation, I wanted to give you free floor tickets to my tour.
+    </h2>
+    <h1>See you there!</h1>
 </body>
 </html>
